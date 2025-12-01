@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - MedBooking</title>
+    <link rel="stylesheet" href="chatbot.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Chatbot Widget -->
+    <div id="chatbotWidget" class="chatbot-widget">
+        <!-- Chatbot Toggle Button -->
+        <div id="chatbotToggle" class="chatbot-toggle">
+            <i class="fas fa-comments"></i>
+            <div class="notification-badge" id="notificationBadge" style="display: none;">1</div>
+        </div>
+
+        <!-- Chatbot Container -->
+        <div id="chatbotContainer" class="chatbot-container" style="display: none;">
+            <!-- Chatbot Header -->
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">
+                    <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=AI" alt="AI Assistant">
+                </div>
+                <div class="chatbot-info">
+                    <h4>MedBot Assistant</h4>
+                    <p>Trợ lý AI của MedBooking</p>
+                </div>
+                <div class="chatbot-controls">
+                    <button id="minimizeBtn" class="control-btn">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button id="closeBtn" class="control-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-messages">
+                <!-- Welcome message -->
+                <div class="message bot-message">
+                    <div class="message-avatar">
+                        <img src="https://via.placeholder.com/32x32/4A90E2/FFFFFF?text=AI" alt="Bot">
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            Xin chào! Tôi là MedBot, trợ lý AI của MedBooking. Tôi có thể giúp bạn:
+                            <br>• Đặt lịch khám bệnh
+                            <br>• Tìm hiểu về các dịch vụ y tế
+                            <br>• Tư vấn thông tin sức khỏe
+                            <br>• Hướng dẫn sử dụng hệ thống
+                            <br><br>Bạn cần hỗ trợ gì hôm nay?
+                        </div>
+                        <div class="message-time">Bây giờ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="quick-action-btn" onclick="sendQuickMessage('Tôi muốn đặt lịch khám')">
+                    <i class="fas fa-calendar-plus"></i>
+                    Đặt lịch khám
+                </button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Các dịch vụ y tế')">
+                    <i class="fas fa-stethoscope"></i>
+                    Dịch vụ y tế
+                </button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Tư vấn sức khỏe')">
+                    <i class="fas fa-heartbeat"></i>
+                    Tư vấn sức khỏe
+                </button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Hỗ trợ kỹ thuật')">
+                    <i class="fas fa-question-circle"></i>
+                    Hỗ trợ kỹ thuật
+                </button>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" id="chatInput" placeholder="Nhập tin nhắn của bạn..." maxlength="500">
+                    <button id="sendBtn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-actions">
+                    <button id="voiceBtn" class="input-action-btn" title="Giọng nói">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button id="attachBtn" class="input-action-btn" title="Đính kèm">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span>MedBot đang trả lời...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include chatbot script -->
+    <script src="chatbot.js"></script>
+</body>
+</html>
+
+
+

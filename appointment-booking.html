@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Lịch Khám - MedBooking</title>
+    <link rel="stylesheet" href="appointment-booking.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html">Trang chủ</a>
+                    <a href="services.html">Dịch vụ</a>
+                    <a href="appointment-booking.html" class="active">Đặt lịch</a>
+                    <a href="news.html">Tin tức</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='login.html'">Đăng nhập</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login.html?form=register'">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Đặt Lịch Khám Với Bác Sĩ Hàng Đầu</h1>
+                <p>Tìm kiếm và đặt lịch khám với các bác sĩ chuyên khoa uy tín tại các bệnh viện đối tác</p>
+
+                <!-- Quick Search -->
+                <div class="quick-search">
+                    <div class="search-inputs">
+                        <div class="search-group">
+                            <i class="fas fa-stethoscope"></i>
+                            <select id="specialtySelect">
+                                <option value="">Chọn chuyên khoa</option>
+                                <option value="tim-mach">Tim mạch</option>
+                                <option value="noi-tong-hop">Nội tổng hợp</option>
+                                <option value="san-phu-khoa">Sản phụ khoa</option>
+                                <option value="nhi-khoa">Nhi khoa</option>
+                                <option value="da-lieu">Da liễu</option>
+                                <option value="mat">Mắt</option>
+                                <option value="rang-ham-mat">Răng hàm mặt</option>
+                                <option value="tieu-hoa">Tiêu hóa</option>
+                                <option value="than-kinh">Thần kinh</option>
+                                <option value="co-xuong-khop">Cơ xương khớp</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="locationSelect">
+                                <option value="">Chọn bệnh viện</option>
+                                <option value="viet-duc">Bệnh viện Việt Đức</option>
+                                <option value="cho-ray">Bệnh viện Chợ Rẫy</option>
+                                <option value="bach-mai">Bệnh viện Bach Mai</option>
+                                <option value="hue-central">Bệnh viện Trung ương Huế</option>
+                                <option value="can-tho">Bệnh viện Đa khoa Cần Thơ</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-large" onclick="searchDoctors()">
+                            <i class="fas fa-search"></i>
+                            Tìm bác sĩ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar">
+            <div class="filter-section">
+                <h3>Chuyên khoa</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" value="tim-mach" onchange="applyFilters()">
+                        <span>Tim mạch</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="noi-tong-hop" onchange="applyFilters()">
+                        <span>Nội tổng hợp</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="san-phu-khoa" onchange="applyFilters()">
+                        <span>Sản phụ khoa</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="nhi-khoa" onchange="applyFilters()">
+                        <span>Nhi khoa</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="da-lieu" onchange="applyFilters()">
+                        <span>Da liễu</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="mat" onchange="applyFilters()">
+                        <span>Mắt</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="rang-ham-mat" onchange="applyFilters()">
+                        <span>Răng hàm mặt</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="tieu-hoa" onchange="applyFilters()">
+                        <span>Tiêu hóa</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Bệnh viện</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" value="viet-duc" onchange="applyFilters()">
+                        <span>Bệnh viện Việt Đức</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="cho-ray" onchange="applyFilters()">
+                        <span>Bệnh viện Chợ Rẫy</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="bach-mai" onchange="applyFilters()">
+                        <span>Bệnh viện Bach Mai</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="hue-central" onchange="applyFilters()">
+                        <span>Bệnh viện Trung ương Huế</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Giá khám</h3>
+                <div class="price-range">
+                    <input type="range" id="priceRange" min="100000" max="1000000" step="50000" value="500000" onchange="applyFilters()">
+                    <div class="price-display">
+                        <span>Dưới <span id="priceValue">500,000</span> VND</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Đánh giá</h3>
+                <div class="rating-filter">
+                    <label class="filter-option">
+                        <input type="radio" name="rating" value="4" onchange="applyFilters()">
+                        <span>4+ sao</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="rating" value="3" onchange="applyFilters()">
+                        <span>3+ sao</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="rating" value="" onchange="applyFilters()">
+                        <span>Tất cả</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Doctors List -->
+        <div class="doctors-content">
+            <!-- Results Header -->
+            <div class="results-header">
+                <div class="results-count">
+                    <span id="resultsCount">0</span> bác sĩ được tìm thấy
+                </div>
+                <div class="sort-options">
+                    <select id="sortSelect" onchange="sortDoctors()">
+                        <option value="rating">Sắp xếp theo đánh giá</option>
+                        <option value="experience">Sắp xếp theo kinh nghiệm</option>
+                        <option value="price-low">Giá thấp đến cao</option>
+                        <option value="price-high">Giá cao đến thấp</option>
+                        <option value="name">Sắp xếp theo tên</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Doctors Grid -->
+            <div class="doctors-grid" id="doctorsGrid">
+                <!-- Doctor cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <p>Đang tìm kiếm bác sĩ...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-search"></i>
+                <h3>Không tìm thấy bác sĩ</h3>
+                <p>Thử thay đổi tiêu chí tìm kiếm hoặc bỏ chọn một số bộ lọc</p>
+                <button class="btn btn-primary" onclick="clearFilters()">Xóa bộ lọc</button>
+            </div>
+
+            <!-- Load More -->
+            <div class="load-more" id="loadMore">
+                <button class="btn btn-outline" onclick="loadMoreDoctors()">
+                    <i class="fas fa-plus"></i>
+                    Xem thêm bác sĩ
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Doctor Profile Modal -->
+    <div id="doctorModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <span class="close" onclick="closeDoctorModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="doctor-profile">
+                    <div class="profile-header">
+                        <div class="doctor-avatar">
+                            <img id="modalDoctorAvatar" src="" alt="Doctor">
+                        </div>
+                        <div class="doctor-info">
+                            <h2 id="modalDoctorName">BS. Nguyễn Văn A</h2>
+                            <p id="modalDoctorSpecialty" class="specialty">Tim mạch</p>
+                            <div class="rating">
+                                <div class="stars" id="modalDoctorStars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span id="modalDoctorRating">4.8 (120 đánh giá)</span>
+                            </div>
+                            <div class="doctor-meta">
+                                <span><i class="fas fa-graduation-cap"></i> <span id="modalDoctorExperience">15 năm</span></span>
+                                <span><i class="fas fa-dollar-sign"></i> <span id="modalDoctorPrice">300,000 VND</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-content">
+                        <div class="profile-tabs">
+                            <button class="tab-btn active" onclick="switchTab('overview')">Tổng quan</button>
+                            <button class="tab-btn" onclick="switchTab('schedule')">Lịch làm việc</button>
+                            <button class="tab-btn" onclick="switchTab('reviews')">Đánh giá</button>
+                        </div>
+
+                        <div class="tab-content">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane active" id="overviewTab">
+                                <div class="overview-section">
+                                    <h3>Giới thiệu</h3>
+                                    <p id="modalDoctorBio">Bác sĩ chuyên khoa Tim mạch với hơn 15 năm kinh nghiệm trong lĩnh vực chẩn đoán và điều trị các bệnh lý tim mạch. Tốt nghiệp Đại học Y Hà Nội và có nhiều năm tu nghiệp tại nước ngoài.</p>
+                                </div>
+
+                                <div class="overview-section">
+                                    <h3>Chuyên môn</h3>
+                                    <ul id="modalDoctorSpecialties">
+                                        <li>Chẩn đoán và điều trị bệnh tim mạch</li>
+                                        <li>Can thiệp tim mạch</li>
+                                        <li>Siêu âm tim mạch</li>
+                                        <li>Điện tâm đồ</li>
+                                    </ul>
+                                </div>
+
+                                <div class="overview-section">
+                                    <h3>Bằng cấp & Chứng chỉ</h3>
+                                    <ul id="modalDoctorCertifications">
+                                        <li>Bác sĩ chuyên khoa cấp II Tim mạch</li>
+                                        <li>Giấy phép hành nghề số: 123456789</li>
+                                        <li>Chứng chỉ can thiệp tim mạch (Hàn Quốc)</li>
+                                        <li>Hội viên Hội Tim mạch Việt Nam</li>
+                                    </ul>
+                                </div>
+
+                                <div class="overview-section">
+                                    <h3>Bệnh viện công tác</h3>
+                                    <div class="hospital-info">
+                                        <img src="https://via.placeholder.com/60x60/4A90E2/FFFFFF?text=VD" alt="Hospital">
+                                        <div>
+                                            <h4 id="modalDoctorHospital">Bệnh viện Việt Đức</h4>
+                                            <p id="modalDoctorAddress">40 Tràng Thi, Hoàn Kiếm, Hà Nội</p>
+                                            <p><i class="fas fa-phone"></i> <span id="modalDoctorPhone">024 3856 4133</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Schedule Tab -->
+                            <div class="tab-pane" id="scheduleTab">
+                                <div class="schedule-calendar">
+                                    <div class="calendar-header">
+                                        <button onclick="prevWeek()">&lt;</button>
+                                        <h3 id="currentWeek">Tuần 15-21 tháng 12, 2024</h3>
+                                        <button onclick="nextWeek()">&gt;</button>
+                                    </div>
+                                    <div class="calendar-grid">
+                                        <div class="calendar-day">
+                                            <h4>Thứ 2<br><span>16/12</span></h4>
+                                            <div class="time-slots">
+                                                <div class="time-slot available" onclick="selectTimeSlot('16/12', '08:00')">08:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('16/12', '09:00')">09:00</div>
+                                                <div class="time-slot">10:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('16/12', '14:00')">14:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <h4>Thứ 3<br><span>17/12</span></h4>
+                                            <div class="time-slots">
+                                                <div class="time-slot available" onclick="selectTimeSlot('17/12', '08:00')">08:00</div>
+                                                <div class="time-slot">09:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('17/12', '10:00')">10:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('17/12', '15:00')">15:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <h4>Thứ 4<br><span>18/12</span></h4>
+                                            <div class="time-slots">
+                                                <div class="time-slot available" onclick="selectTimeSlot('18/12', '08:00')">08:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('18/12', '09:00')">09:00</div>
+                                                <div class="time-slot">10:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('18/12', '16:00')">16:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <h4>Thứ 5<br><span>19/12</span></h4>
+                                            <div class="time-slots">
+                                                <div class="time-slot">08:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('19/12', '09:00')">09:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('19/12', '10:00')">10:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('19/12', '14:00')">14:00</div>
+                                            </div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <h4>Thứ 6<br><span>20/12</span></h4>
+                                            <div class="time-slots">
+                                                <div class="time-slot available" onclick="selectTimeSlot('20/12', '08:00')">08:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('20/12', '09:00')">09:00</div>
+                                                <div class="time-slot available" onclick="selectTimeSlot('20/12', '10:00')">10:00</div>
+                                                <div class="time-slot">14:00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reviews Tab -->
+                            <div class="tab-pane" id="reviewsTab">
+                                <div class="reviews-summary">
+                                    <div class="rating-overview">
+                                        <div class="average-rating">
+                                            <span class="rating-number">4.8</span>
+                                            <div class="stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <span class="total-reviews">120 đánh giá</span>
+                                        </div>
+                                    </div>
+                                    <div class="rating-breakdown">
+                                        <div class="rating-bar">
+                                            <span>5 sao</span>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 75%"></div>
+                                            </div>
+                                            <span>90</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>4 sao</span>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 20%"></div>
+                                            </div>
+                                            <span>24</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>3 sao</span>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 3%"></div>
+                                            </div>
+                                            <span>4</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>2 sao</span>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 2%"></div>
+                                            </div>
+                                            <span>2</span>
+                                        </div>
+                                        <div class="rating-bar">
+                                            <span>1 sao</span>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span>0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="reviews-list">
+                                    <div class="review-item">
+                                        <div class="review-header">
+                                            <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=PT" alt="Patient">
+                                            <div>
+                                                <h4>Nguyễn Thị A</h4>
+                                                <div class="review-rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <span class="review-date">15/11/2024</span>
+                                        </div>
+                                        <p class="review-content">Bác sĩ rất tận tình và chuyên nghiệp. Giải thích rất rõ ràng về tình trạng bệnh và cách điều trị. Phòng khám sạch sẽ, nhân viên thân thiện. Rất hài lòng!</p>
+                                    </div>
+
+                                    <div class="review-item">
+                                        <div class="review-header">
+                                            <img src="https://via.placeholder.com/40x40/50E3C2/FFFFFF?text=PT" alt="Patient">
+                                            <div>
+                                                <h4>Trần Văn B</h4>
+                                                <div class="review-rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                            </div>
+                                            <span class="review-date">12/11/2024</span>
+                                        </div>
+                                        <p class="review-content">Khám rất kỹ lưỡng, bác sĩ hỏi rất chi tiết về triệu chứng và tiền sử bệnh. Tư vấn chế độ ăn uống và tập luyện rất hữu ích.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-primary btn-large" id="bookAppointmentBtn" onclick="proceedToBooking()">
+                            <i class="fas fa-calendar-plus"></i>
+                            Đặt lịch khám
+                        </button>
+                        <button class="btn btn-outline" onclick="closeDoctorModal()">
+                            <i class="fas fa-times"></i>
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đặt lịch khám</h3>
+                <span class="close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="booking-summary">
+                    <div class="selected-doctor">
+                        <img id="bookingDoctorAvatar" src="" alt="Doctor">
+                        <div>
+                            <h4 id="bookingDoctorName">BS. Nguyễn Văn A</h4>
+                            <p id="bookingDoctorSpecialty">Tim mạch</p>
+                            <p id="bookingDateTime">25/12/2024 - 14:30</p>
+                        </div>
+                    </div>
+
+                    <div class="booking-details">
+                        <div class="detail-row">
+                            <span>Phí khám:</span>
+                            <span id="bookingFee">300,000 VND</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Bệnh viện:</span>
+                            <span id="bookingHospital">Bệnh viện Việt Đức</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Địa chỉ:</span>
+                            <span id="bookingAddress">40 Tràng Thi, Hoàn Kiếm, Hà Nội</span>
+                        </div>
+                    </div>
+
+                    <div class="booking-form">
+                        <h4>Thông tin bệnh nhân</h4>
+                        <div class="form-group">
+                            <label>Họ và tên *</label>
+                            <input type="text" id="patientName" placeholder="Nhập họ và tên" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Số điện thoại *</label>
+                                <input type="tel" id="patientPhone" placeholder="Nhập số điện thoại" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="patientEmail" placeholder="Nhập email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Lý do khám</label>
+                            <textarea id="bookingReason" rows="3" placeholder="Mô tả triệu chứng hoặc lý do khám bệnh..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox" id="agreeBooking">
+                                <span class="checkmark"></span>
+                                Tôi đồng ý với <a href="#" target="_blank">điều khoản đặt lịch</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-actions">
+                    <button class="btn btn-outline" onclick="closeBookingModal()">Hủy</button>
+                    <button class="btn btn-primary" onclick="confirmBooking()">Xác nhận đặt lịch</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="appointment-booking.js"></script>
+</body>
+</html>
+
+
+

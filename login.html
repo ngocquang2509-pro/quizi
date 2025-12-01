@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - MedBooking</title>
+    <link rel="stylesheet" href="auth.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Left Side - Branding -->
+        <div class="auth-left">
+            <div class="brand-content">
+                <div class="logo">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <h1>Chào mừng đến với MedBooking</h1>
+                <p>Hệ thống đặt lịch khám bệnh online hàng đầu Việt Nam</p>
+
+                <div class="features">
+                    <div class="feature-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <h4>Đặt lịch dễ dàng</h4>
+                            <p>Đặt lịch khám chỉ với vài cú nhấp chuột</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-user-md"></i>
+                        <div>
+                            <h4>Bác sĩ chuyên khoa</h4>
+                            <p>Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>Bảo mật thông tin</h4>
+                            <p>Thông tin cá nhân được bảo mật tuyệt đối</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="number">50,000+</span>
+                        <span class="label">Bệnh nhân</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">200+</span>
+                        <span class="label">Bác sĩ</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">15</span>
+                        <span class="label">Bệnh viện</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Auth Forms -->
+        <div class="auth-right">
+            <!-- Login Form -->
+            <div class="auth-form active" id="loginForm">
+                <div class="form-header">
+                    <h2>Đăng nhập</h2>
+                    <p>Nhập thông tin tài khoản để tiếp tục</p>
+                </div>
+
+                <form class="form-content" id="loginFormContent">
+                    <div class="form-group">
+                        <label for="loginEmail">Email hoặc số điện thoại</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" id="loginEmail" placeholder="Nhập email hoặc số điện thoại" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Mật khẩu</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" placeholder="Nhập mật khẩu" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Ghi nhớ đăng nhập
+                        </label>
+                        <a href="#" class="forgot-password" onclick="showForgotPassword()">Quên mật khẩu?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đăng nhập
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Chưa có tài khoản?
+                        <a href="#" onclick="switchToRegister()">Đăng ký ngay</a>
+                    </p>
+                </div>
+
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="btn btn-google" onclick="loginWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Đăng nhập với Google
+                    </button>
+                    <button class="btn btn-facebook" onclick="loginWithFacebook()">
+                        <i class="fab fa-facebook"></i>
+                        Đăng nhập với Facebook
+                    </button>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form" id="registerForm">
+                <div class="form-header">
+                    <h2>Đăng ký tài khoản</h2>
+                    <p>Tạo tài khoản để sử dụng dịch vụ</p>
+                </div>
+
+                <form class="form-content" id="registerFormContent">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Họ</label>
+                            <input type="text" id="firstName" placeholder="Nhập họ" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Tên</label>
+                            <input type="text" id="lastName" placeholder="Nhập tên" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="registerEmail" placeholder="Nhập email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPhone">Số điện thoại</label>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="registerPhone" placeholder="Nhập số điện thoại" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Mật khẩu</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="registerPassword" placeholder="Nhập mật khẩu (tối thiểu 8 ký tự)" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength" id="passwordStrength"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userRole">Bạn là</label>
+                        <div class="role-selection">
+                            <label class="role-option">
+                                <input type="radio" name="userRole" value="patient" checked>
+                                <span class="role-card">
+                                    <i class="fas fa-user"></i>
+                                    <span>Bệnh nhân</span>
+                                </span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="userRole" value="doctor">
+                                <span class="role-card">
+                                    <i class="fas fa-user-md"></i>
+                                    <span>Bác sĩ</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            Tôi đồng ý với <a href="#" target="_blank">Điều khoản sử dụng</a> và <a href="#" target="_blank">Chính sách bảo mật</a>
+                        </label>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="subscribeNewsletter">
+                            <span class="checkmark"></span>
+                            Nhận tin tức và khuyến mãi qua email
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-user-plus"></i>
+                        Đăng ký tài khoản
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Đã có tài khoản?
+                        <a href="#" onclick="switchToLogin()">Đăng nhập</a>
+                    </p>
+                </div>
+
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="btn btn-google" onclick="registerWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Đăng ký với Google
+                    </button>
+                    <button class="btn btn-facebook" onclick="registerWithFacebook()">
+                        <i class="fab fa-facebook"></i>
+                        Đăng ký với Facebook
+                    </button>
+                </div>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div class="auth-form" id="forgotPasswordForm">
+                <div class="form-header">
+                    <h2>Quên mật khẩu</h2>
+                    <p>Nhập email để nhận hướng dẫn đặt lại mật khẩu</p>
+                </div>
+
+                <form class="form-content" id="forgotPasswordFormContent">
+                    <div class="form-group">
+                        <label for="resetEmail">Email</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="resetEmail" placeholder="Nhập email của bạn" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-paper-plane"></i>
+                        Gửi hướng dẫn
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>
+                        <a href="#" onclick="switchToLogin()">Quay lại đăng nhập</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đăng ký thành công!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Chào mừng bạn đến với MedBooking!</h4>
+                    <p>Vui lòng kiểm tra email để kích hoạt tài khoản và bắt đầu sử dụng dịch vụ.</p>
+                </div>
+                <button class="btn btn-primary" onclick="closeSuccessModal()">Bắt đầu sử dụng</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
+
+
+

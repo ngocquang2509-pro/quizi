@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MedBooking</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-cog"></i>
+                <span>Admin Panel</span>
+            </div>
+            <div class="header-right">
+                <div class="system-status">
+                    <i class="fas fa-circle text-success"></i>
+                    <span>Hệ thống hoạt động bình thường</span>
+                </div>
+                <div class="notifications">
+                    <button class="notification-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">12</span>
+                    </button>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h4>Thông báo hệ thống</h4>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread critical">
+                                <div class="notification-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Máy chủ database có dấu hiệu quá tải</p>
+                                    <span class="notification-time">2 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread warning">
+                                <div class="notification-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>5 tài khoản đăng nhập thất bại liên tiếp</p>
+                                    <span class="notification-time">5 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Sao lưu dữ liệu hoàn thành</p>
+                                    <span class="notification-time">1 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>10 bác sĩ mới đăng ký thành công</p>
+                                    <span class="notification-time">2 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Doanh thu tháng này đạt 95% mục tiêu</p>
+                                    <span class="notification-time">3 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-menu">
+                    <button class="user-btn" onclick="toggleUserMenu()">
+                        <img src="https://via.placeholder.com/40x40/9B59B6/FFFFFF?text=AD" alt="Avatar" class="user-avatar">
+                        <span class="user-name">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#profile"><i class="fas fa-user"></i> Hồ sơ cá nhân</a>
+                        <a href="#settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                        <a href="#logs"><i class="fas fa-history"></i> Nhật ký hoạt động</a>
+                        <div class="divider"></div>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" onclick="showSection('overview')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Tổng quan</span>
+                </a>
+                <a href="#users" class="nav-item" onclick="showSection('users')">
+                    <i class="fas fa-users"></i>
+                    <span>Quản lý người dùng</span>
+                </a>
+                <a href="#hospitals" class="nav-item" onclick="showSection('hospitals')">
+                    <i class="fas fa-hospital"></i>
+                    <span>Bệnh viện</span>
+                </a>
+                <a href="#services" class="nav-item" onclick="showSection('services')">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Dịch vụ y tế</span>
+                </a>
+                <a href="#appointments" class="nav-item" onclick="showSection('appointments')">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Lịch hẹn</span>
+                </a>
+                <a href="#reports" class="nav-item" onclick="showSection('reports')">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Báo cáo</span>
+                </a>
+                <a href="#payments" class="nav-item" onclick="showSection('payments')">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Thanh toán</span>
+                </a>
+                <a href="#content" class="nav-item" onclick="showSection('content')">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Nội dung</span>
+                </a>
+                <a href="#system" class="nav-item" onclick="showSection('system')">
+                    <i class="fas fa-cogs"></i>
+                    <span>Hệ thống</span>
+                </a>
+                <a href="#security" class="nav-item" onclick="showSection('security')">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Bảo mật</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview-section" class="content-section active">
+                <div class="section-header">
+                    <h1>Tổng quan hệ thống</h1>
+                    <p>Thống kê tổng quan về hoạt động của MedBooking</p>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>45,231</h3>
+                            <p>Tổng người dùng</p>
+                            <span class="metric-change positive">+12.5% so với tháng trước</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon appointments">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>8,547</h3>
+                            <p>Lịch hẹn tháng này</p>
+                            <span class="metric-change positive">+8.2% so với tháng trước</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>285M</h3>
+                            <p>Doanh thu tháng này</p>
+                            <span class="metric-change positive">+15.3% so với tháng trước</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon satisfaction">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>4.7</h3>
+                            <p>Đánh giá trung bình</p>
+                            <span class="metric-change neutral">+0.1 so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Lịch hẹn theo tháng</h3>
+                            <select class="chart-period">
+                                <option value="6months">6 tháng qua</option>
+                                <option value="1year">1 năm qua</option>
+                                <option value="2years">2 năm qua</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="appointmentsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Phân bố người dùng</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="usersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="recent-activities">
+                    <div class="section-title">
+                        <h2>Hoạt động gần đây</h2>
+                        <button class="btn-outline" onclick="showSection('reports')">Xem báo cáo chi tiết</button>
+                    </div>
+                    <div class="activity-log">
+                        <div class="activity-item">
+                            <div class="activity-time">14:32</div>
+                            <div class="activity-content">
+                                <span class="activity-user">BS. Nguyễn Văn A</span>
+                                <span class="activity-action">đã cập nhật hồ sơ bệnh án</span>
+                                <span class="activity-target">BN001234 - Nguyễn Thị B</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">14:28</div>
+                            <div class="activity-content">
+                                <span class="activity-user">NV. Trần Thị Linh</span>
+                                <span class="activity-action">đã xác nhận lịch hẹn</span>
+                                <span class="activity-target">Lịch khám tim mạch - BS. Lê Văn C</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">14:15</div>
+                            <div class="activity-content">
+                                <span class="activity-user">Hệ thống</span>
+                                <span class="activity-action">đã sao lưu dữ liệu tự động</span>
+                                <span class="activity-target">Database chính - 2.3GB</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">14:02</div>
+                            <div class="activity-content">
+                                <span class="activity-user">Admin</span>
+                                <span class="activity-action">đã thêm bác sĩ mới</span>
+                                <span class="activity-target">BS. Hoàng Thị D - Khoa Nội</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">13:45</div>
+                            <div class="activity-content">
+                                <span class="activity-user">Bệnh nhân</span>
+                                <span class="activity-action">đã thanh toán thành công</span>
+                                <span class="activity-target">500,000 VND - Mã giao dịch #TXN001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health -->
+                <div class="system-health">
+                    <div class="section-title">
+                        <h2>Tình trạng hệ thống</h2>
+                    </div>
+                    <div class="health-grid">
+                        <div class="health-item">
+                            <div class="health-icon server">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="health-info">
+                                <h4>Máy chủ web</h4>
+                                <p>Trạng thái: <span class="status healthy">Hoạt động tốt</span></p>
+                                <p>CPU: 45% • RAM: 6.2GB/16GB</p>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon database">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="health-info">
+                                <h4>Cơ sở dữ liệu</h4>
+                                <p>Trạng thái: <span class="status warning">Quá tải nhẹ</span></p>
+                                <p>Kết nối: 234 • Thời gian phản hồi: 120ms</p>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon api">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="health-info">
+                                <h4>API Services</h4>
+                                <p>Trạng thái: <span class="status healthy">Hoạt động tốt</span></p>
+                                <p>Uptime: 99.9% • Phản hồi: 45ms</p>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon payment">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="health-info">
+                                <h4>Cổng thanh toán</h4>
+                                <p>Trạng thái: <span class="status healthy">Hoạt động tốt</span></p>
+                                <p>MOMO: Online • VNPAY: Online</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý người dùng</h1>
+                    <p>Quản lý tất cả tài khoản trong hệ thống</p>
+                </div>
+
+                <div class="users-toolbar">
+                    <div class="user-filters">
+                        <select class="filter-select" onchange="filterUsers()">
+                            <option value="all">Tất cả vai trò</option>
+                            <option value="patient">Bệnh nhân</option>
+                            <option value="doctor">Bác sĩ</option>
+                            <option value="staff">Nhân viên</option>
+                            <option value="admin">Quản trị viên</option>
+                        </select>
+                        <select class="filter-select" onchange="filterUserStatus()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Không hoạt động</option>
+                            <option value="suspended">Tạm khóa</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm người dùng..." onkeyup="searchUsers()">
+                    </div>
+                    <button class="btn-primary" onclick="addNewUser()">
+                        <i class="fas fa-plus"></i>
+                        Thêm người dùng
+                    </button>
+                </div>
+
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Người dùng</th>
+                                <th>Vai trò</th>
+                                <th>Email</th>
+                                <th>SĐT</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr class="user-row">
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=NA" alt="User">
+                                        <div>
+                                            <strong>Nguyễn Thị A</strong><br>
+                                            <small>ID: USR001</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge patient">Bệnh nhân</span></td>
+                                <td>nguyenthia@email.com</td>
+                                <td>0987654321</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td>15/11/2024</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewUser(1)">Xem</button>
+                                        <button class="btn-small outline" onclick="editUser(1)">Sửa</button>
+                                        <button class="btn-small danger" onclick="suspendUser(1)">Khóa</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="user-row">
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=NV" alt="User">
+                                        <div>
+                                            <strong>BS. Trần Văn B</strong><br>
+                                            <small>ID: USR002</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge doctor">Bác sĩ</span></td>
+                                <td>tranvanb@medbooking.vn</td>
+                                <td>0987654322</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td>10/10/2024</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewUser(2)">Xem</button>
+                                        <button class="btn-small outline" onclick="editUser(2)">Sửa</button>
+                                        <button class="btn-small danger" onclick="suspendUser(2)">Khóa</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="user-row">
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/40x40/F39C12/FFFFFF?text=NV" alt="User">
+                                        <div>
+                                            <strong>NV. Lê Thị C</strong><br>
+                                            <small>ID: USR003</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge staff">Nhân viên</span></td>
+                                <td>lethic@medbooking.vn</td>
+                                <td>0987654323</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td>05/09/2024</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewUser(3)">Xem</button>
+                                        <button class="btn-small outline" onclick="editUser(3)">Sửa</button>
+                                        <button class="btn-small danger" onclick="suspendUser(3)">Khóa</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- User Statistics -->
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12,456</div>
+                        <div class="stat-label">Bệnh nhân</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89</div>
+                        <div class="stat-label">Bác sĩ</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Nhân viên</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Quản trị viên</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Section -->
+            <section id="system-section" class="content-section">
+                <div class="section-header">
+                    <h1>Cài đặt hệ thống</h1>
+                    <p>Quản lý cấu hình và bảo trì hệ thống</p>
+                </div>
+
+                <div class="system-settings">
+                    <!-- General Settings -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Cài đặt chung</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Tên hệ thống</label>
+                                    <p>MedBooking - Đặt lịch khám bệnh online</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('systemName')">Sửa</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Email hệ thống</label>
+                                    <p>admin@medbooking.vn</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('systemEmail')">Sửa</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Số điện thoại hỗ trợ</label>
+                                    <p>1900-xxxx</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('supportPhone')">Sửa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Bảo mật</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Mật khẩu tối thiểu</label>
+                                    <p>8 ký tự, bao gồm chữ hoa, chữ thường, số</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('passwordPolicy')">Sửa</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Thời gian phiên đăng nhập</label>
+                                    <p>24 giờ</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('sessionTimeout')">Sửa</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>2FA</label>
+                                    <p>Bắt buộc cho quản trị viên</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="enable2FA" checked>
+                                    <label for="enable2FA"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Settings -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Thanh toán</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>MOMO Integration</label>
+                                    <p>API Key: ••••••••••••••••••</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('momoConfig')">Cấu hình</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>VNPAY Integration</label>
+                                    <p>Merchant ID: ••••••••••••••••••</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('vnpayConfig')">Cấu hình</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Phí xử lý thanh toán</label>
+                                    <p>1.5% cho mỗi giao dịch</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSetting('paymentFee')">Sửa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Bảo trì hệ thống</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Sao lưu dữ liệu</label>
+                                    <p>Lần cuối: 25/11/2024 02:00</p>
+                                </div>
+                                <button class="btn-primary small" onclick="backupNow()">Sao lưu ngay</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Dọn dẹp cache</label>
+                                    <p>Giải phóng bộ nhớ cache</p>
+                                </div>
+                                <button class="btn-outline small" onclick="clearCache()">Dọn dẹp</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Cập nhật hệ thống</label>
+                                    <p>Phiên bản hiện tại: v2.1.4</p>
+                                </div>
+                                <button class="btn-outline small" onclick="checkUpdates()">Kiểm tra</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hospitals Section -->
+            <section id="hospitals-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý bệnh viện</h1>
+                    <p>Quản lý thông tin và hoạt động của các bệnh viện đối tác</p>
+                </div>
+
+                <div class="hospitals-toolbar">
+                    <div class="hospital-filters">
+                        <select class="filter-select" onchange="filterHospitals()">
+                            <option value="all">Tất cả bệnh viện</option>
+                            <option value="active">Đang hoạt động</option>
+                            <option value="inactive">Tạm ngừng</option>
+                            <option value="maintenance">Bảo trì</option>
+                        </select>
+                        <select class="filter-select" onchange="filterHospitalType()">
+                            <option value="all">Tất cả loại</option>
+                            <option value="public">Công lập</option>
+                            <option value="private">Tư nhân</option>
+                            <option value="international">Quốc tế</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm bệnh viện..." onkeyup="searchHospitals()">
+                    </div>
+                    <button class="btn-primary" onclick="addNewHospital()">
+                        <i class="fas fa-plus"></i>
+                        Thêm bệnh viện
+                    </button>
+                </div>
+
+                <div class="hospitals-grid">
+                    <div class="hospital-card">
+                        <div class="hospital-header">
+                            <img src="https://via.placeholder.com/80x80/4A90E2/FFFFFF?text=VD" alt="Hospital" class="hospital-logo">
+                            <div class="hospital-basic-info">
+                                <h3>Bệnh viện Việt Đức</h3>
+                                <p class="hospital-type">Công lập</p>
+                                <span class="hospital-status active">Đang hoạt động</span>
+                            </div>
+                        </div>
+                        <div class="hospital-details">
+                            <div class="hospital-stat">
+                                <span class="stat-label">Bác sĩ:</span>
+                                <span class="stat-value">45</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Lịch hẹn/tháng:</span>
+                                <span class="stat-value">1,234</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Đánh giá:</span>
+                                <span class="stat-value">4.8 ⭐</span>
+                            </div>
+                        </div>
+                        <div class="hospital-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            40 Tràng Thi, Hoàn Kiếm, Hà Nội
+                        </div>
+                        <div class="hospital-actions">
+                            <button class="btn-small outline" onclick="viewHospital(1)">Xem</button>
+                            <button class="btn-small outline" onclick="editHospital(1)">Sửa</button>
+                            <button class="btn-small danger" onclick="deactivateHospital(1)">Tạm ngừng</button>
+                        </div>
+                    </div>
+
+                    <div class="hospital-card">
+                        <div class="hospital-header">
+                            <img src="https://via.placeholder.com/80x80/E94B3C/FFFFFF?text=CR" alt="Hospital" class="hospital-logo">
+                            <div class="hospital-basic-info">
+                                <h3>Bệnh viện Chợ Rẫy</h3>
+                                <p class="hospital-type">Công lập</p>
+                                <span class="hospital-status active">Đang hoạt động</span>
+                            </div>
+                        </div>
+                        <div class="hospital-details">
+                            <div class="hospital-stat">
+                                <span class="stat-label">Bác sĩ:</span>
+                                <span class="stat-value">78</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Lịch hẹn/tháng:</span>
+                                <span class="stat-value">2,156</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Đánh giá:</span>
+                                <span class="stat-value">4.7 ⭐</span>
+                            </div>
+                        </div>
+                        <div class="hospital-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            201B Nguyễn Chí Thanh, Quận 5, TP.HCM
+                        </div>
+                        <div class="hospital-actions">
+                            <button class="btn-small outline" onclick="viewHospital(2)">Xem</button>
+                            <button class="btn-small outline" onclick="editHospital(2)">Sửa</button>
+                            <button class="btn-small danger" onclick="deactivateHospital(2)">Tạm ngừng</button>
+                        </div>
+                    </div>
+
+                    <div class="hospital-card">
+                        <div class="hospital-header">
+                            <img src="https://via.placeholder.com/80x80/F39C12/FFFFFF?text=BM" alt="Hospital" class="hospital-logo">
+                            <div class="hospital-basic-info">
+                                <h3>Bệnh viện Bach Mai</h3>
+                                <p class="hospital-type">Công lập</p>
+                                <span class="hospital-status active">Đang hoạt động</span>
+                            </div>
+                        </div>
+                        <div class="hospital-details">
+                            <div class="hospital-stat">
+                                <span class="stat-label">Bác sĩ:</span>
+                                <span class="stat-value">156</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Lịch hẹn/tháng:</span>
+                                <span class="stat-value">3,421</span>
+                            </div>
+                            <div class="hospital-stat">
+                                <span class="stat-label">Đánh giá:</span>
+                                <span class="stat-value">4.9 ⭐</span>
+                            </div>
+                        </div>
+                        <div class="hospital-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            78 Giai Phong, Đống Đa, Hà Nội
+                        </div>
+                        <div class="hospital-actions">
+                            <button class="btn-small outline" onclick="viewHospital(3)">Xem</button>
+                            <button class="btn-small outline" onclick="editHospital(3)">Sửa</button>
+                            <button class="btn-small danger" onclick="deactivateHospital(3)">Tạm ngừng</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý dịch vụ y tế</h1>
+                    <p>Quản lý các gói dịch vụ khám chữa bệnh</p>
+                </div>
+
+                <div class="services-toolbar">
+                    <div class="service-filters">
+                        <select class="filter-select" onchange="filterServices()">
+                            <option value="all">Tất cả dịch vụ</option>
+                            <option value="active">Đang hoạt động</option>
+                            <option value="inactive">Tạm ngừng</option>
+                            <option value="new">Mới</option>
+                        </select>
+                        <select class="filter-select" onchange="filterServiceCategory()">
+                            <option value="all">Tất cả chuyên khoa</option>
+                            <option value="general">Khám tổng quát</option>
+                            <option value="specialty">Chuyên khoa</option>
+                            <option value="tests">Xét nghiệm</option>
+                            <option value="vaccination">Tiêm chủng</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm dịch vụ..." onkeyup="searchServices()">
+                    </div>
+                    <button class="btn-primary" onclick="addNewService()">
+                        <i class="fas fa-plus"></i>
+                        Thêm dịch vụ
+                    </button>
+                </div>
+
+                <div class="services-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dịch vụ</th>
+                                <th>Chuyên khoa</th>
+                                <th>Giá (VND)</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Đặt lịch</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="servicesTableBody">
+                            <tr>
+                                <td>
+                                    <div class="service-info">
+                                        <i class="fas fa-stethoscope service-icon"></i>
+                                        <div>
+                                            <strong>Khám tổng quát</strong>
+                                            <br><small>Khám sức khỏe toàn diện</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Nội tổng quát</td>
+                                <td>300,000</td>
+                                <td>30 phút</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td><span class="booking-count">247</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewService(1)">Xem</button>
+                                        <button class="btn-small outline" onclick="editService(1)">Sửa</button>
+                                        <button class="btn-small danger" onclick="deactivateService(1)">Tạm ngừng</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="service-info">
+                                        <i class="fas fa-heartbeat service-icon"></i>
+                                        <div>
+                                            <strong>Siêu âm tim mạch</strong>
+                                            <br><small>Đánh giá chức năng tim</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Tim mạch</td>
+                                <td>400,000</td>
+                                <td>20 phút</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td><span class="booking-count">189</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewService(2)">Xem</button>
+                                        <button class="btn-small outline" onclick="editService(2)">Sửa</button>
+                                        <button class="btn-small danger" onclick="deactivateService(2)">Tạm ngừng</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="service-info">
+                                        <i class="fas fa-flask service-icon"></i>
+                                        <div>
+                                            <strong>Xét nghiệm máu</strong>
+                                            <br><small>Công thức máu + đường huyết</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Xét nghiệm</td>
+                                <td>150,000</td>
+                                <td>15 phút</td>
+                                <td><span class="status-badge active">Hoạt động</span></td>
+                                <td><span class="booking-count">312</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewService(3)">Xem</button>
+                                        <button class="btn-small outline" onclick="editService(3)">Sửa</button>
+                                        <button class="btn-small danger" onclick="deactivateService(3)">Tạm ngừng</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Appointments Section -->
+            <section id="appointments-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý lịch hẹn</h1>
+                    <p>Theo dõi và quản lý tất cả lịch hẹn trong hệ thống</p>
+                </div>
+
+                <div class="appointments-toolbar">
+                    <div class="appointment-filters">
+                        <select class="filter-select" onchange="filterAppointments()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xác nhận</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="cancelled">Đã hủy</option>
+                            <option value="no-show">Vắng mặt</option>
+                        </select>
+                        <select class="filter-select" onchange="filterAppointmentDate()">
+                            <option value="all">Tất cả thời gian</option>
+                            <option value="today">Hôm nay</option>
+                            <option value="week">Tuần này</option>
+                            <option value="month">Tháng này</option>
+                            <option value="upcoming">Sắp tới</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm lịch hẹn..." onkeyup="searchAppointments()">
+                    </div>
+                    <button class="btn-primary" onclick="exportAppointments()">
+                        <i class="fas fa-download"></i>
+                        Xuất dữ liệu
+                    </button>
+                </div>
+
+                <div class="appointments-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã lịch hẹn</th>
+                                <th>Bệnh nhân</th>
+                                <th>Bác sĩ</th>
+                                <th>Dịch vụ</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTableBody">
+                            <tr>
+                                <td><strong>APP001234</strong></td>
+                                <td>
+                                    <div class="patient-info">
+                                        <img src="https://via.placeholder.com/32x32/E94B3C/FFFFFF?text=PT" alt="Patient">
+                                        <div>
+                                            <strong>Nguyễn Thị A</strong>
+                                            <br><small>ID: USR001</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="doctor-info">
+                                        <img src="https://via.placeholder.com/32x32/4A90E2/FFFFFF?text=DR" alt="Doctor">
+                                        <div>
+                                            <strong>BS. Nguyễn Văn A</strong>
+                                            <br><small>Tim mạch</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Khám tổng quát</td>
+                                <td>
+                                    <div class="appointment-time">
+                                        <div>25/11/2024</div>
+                                        <small>14:30</small>
+                                    </div>
+                                </td>
+                                <td><span class="appointment-status confirmed">Đã xác nhận</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewAppointment(1)">Xem</button>
+                                        <button class="btn-small outline" onclick="editAppointment(1)">Sửa</button>
+                                        <button class="btn-small danger" onclick="cancelAppointment(1)">Hủy</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>APP001235</strong></td>
+                                <td>
+                                    <div class="patient-info">
+                                        <img src="https://via.placeholder.com/32x32/50E3C2/FFFFFF?text=PT" alt="Patient">
+                                        <div>
+                                            <strong>Trần Văn B</strong>
+                                            <br><small>ID: USR002</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="doctor-info">
+                                        <img src="https://via.placeholder.com/32x32/F39C12/FFFFFF?text=DR" alt="Doctor">
+                                        <div>
+                                            <strong>BS. Trần Thị C</strong>
+                                            <br><small>Sản phụ khoa</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Khám sản phụ khoa</td>
+                                <td>
+                                    <div class="appointment-time">
+                                        <div>26/11/2024</div>
+                                        <small>09:00</small>
+                                    </div>
+                                </td>
+                                <td><span class="appointment-status pending">Chờ xác nhận</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewAppointment(2)">Xem</button>
+                                        <button class="btn-small outline" onclick="editAppointment(2)">Sửa</button>
+                                        <button class="btn-small primary" onclick="confirmAppointment(2)">Xác nhận</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>APP001236</strong></td>
+                                <td>
+                                    <div class="patient-info">
+                                        <img src="https://via.placeholder.com/32x32/9B59B6/FFFFFF?text=PT" alt="Patient">
+                                        <div>
+                                            <strong>Lê Thị D</strong>
+                                            <br><small>ID: USR003</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="doctor-info">
+                                        <img src="https://via.placeholder.com/32x32/2ECC71/FFFFFF?text=DR" alt="Doctor">
+                                        <div>
+                                            <strong>BS. Hoàng Văn E</strong>
+                                            <br><small>Nhi khoa</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Khám nhi khoa</td>
+                                <td>
+                                    <div class="appointment-time">
+                                        <div>24/11/2024</div>
+                                        <small>16:00</small>
+                                    </div>
+                                </td>
+                                <td><span class="appointment-status completed">Hoàn thành</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewAppointment(3)">Xem</button>
+                                        <button class="btn-small outline" onclick="viewMedicalRecord(3)">Hồ sơ</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Appointment Statistics -->
+                <div class="appointment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">1,247</div>
+                        <div class="stat-label">Lịch hẹn tháng này</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89%</div>
+                        <div class="stat-label">Tỷ lệ hoàn thành</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Chờ xác nhận</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Đã hủy</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="content-section">
+                <div class="section-header">
+                    <h1>Báo cáo và thống kê</h1>
+                    <p>Phân tích dữ liệu và báo cáo hoạt động hệ thống</p>
+                </div>
+
+                <!-- Report Filters -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label>Loại báo cáo</label>
+                        <select id="reportType" onchange="changeReportType()">
+                            <option value="overview">Tổng quan</option>
+                            <option value="appointments">Lịch hẹn</option>
+                            <option value="revenue">Doanh thu</option>
+                            <option value="users">Người dùng</option>
+                            <option value="services">Dịch vụ</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Khoảng thời gian</label>
+                        <select id="reportPeriod" onchange="changeReportPeriod()">
+                            <option value="today">Hôm nay</option>
+                            <option value="week">Tuần này</option>
+                            <option value="month">Tháng này</option>
+                            <option value="quarter">Quý này</option>
+                            <option value="year">Năm nay</option>
+                            <option value="custom">Tùy chỉnh</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" id="customDateRange" style="display: none;">
+                        <label>Từ ngày</label>
+                        <input type="date" id="startDate">
+                        <label>Đến ngày</label>
+                        <input type="date" id="endDate">
+                    </div>
+                    <button class="btn-primary" onclick="generateReport()">
+                        <i class="fas fa-chart-bar"></i>
+                        Tạo báo cáo
+                    </button>
+                    <button class="btn-outline" onclick="exportReport()">
+                        <i class="fas fa-download"></i>
+                        Xuất báo cáo
+                    </button>
+                </div>
+
+                <!-- Report Content -->
+                <div class="report-content">
+                    <!-- Overview Report -->
+                    <div class="report-section active" id="overview-report">
+                        <div class="report-metrics">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Tổng doanh thu</h3>
+                                    <span class="metric-change positive">+15.3%</span>
+                                </div>
+                                <div class="metric-value">285,000,000 VND</div>
+                                <div class="metric-description">Tháng 11/2024</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Lịch hẹn mới</h3>
+                                    <span class="metric-change positive">+8.2%</span>
+                                </div>
+                                <div class="metric-value">1,247</div>
+                                <div class="metric-description">Tháng 11/2024</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Người dùng mới</h3>
+                                    <span class="metric-change positive">+12.5%</span>
+                                </div>
+                                <div class="metric-value">456</div>
+                                <div class="metric-description">Tháng 11/2024</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Đánh giá trung bình</h3>
+                                    <span class="metric-change neutral">+0.1</span>
+                                </div>
+                                <div class="metric-value">4.7 ⭐</div>
+                                <div class="metric-description">Trên tổng số 3,421 đánh giá</div>
+                            </div>
+                        </div>
+
+                        <div class="report-charts">
+                            <div class="chart-container">
+                                <h3>Doanh thu theo tháng</h3>
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Top dịch vụ được sử dụng</h3>
+                                <canvas id="servicesChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="report-tables">
+                            <div class="table-container">
+                                <h3>Top bác sĩ theo lịch hẹn</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Bác sĩ</th>
+                                            <th>Chuyên khoa</th>
+                                            <th>Số lịch hẹn</th>
+                                            <th>Doanh thu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>BS. Nguyễn Văn A</td>
+                                            <td>Tim mạch</td>
+                                            <td>89</td>
+                                            <td>26,700,000 VND</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>BS. Trần Thị B</td>
+                                            <td>Sản phụ khoa</td>
+                                            <td>76</td>
+                                            <td>22,800,000 VND</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>BS. Lê Văn C</td>
+                                            <td>Nhi khoa</td>
+                                            <td>65</td>
+                                            <td>19,500,000 VND</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointments Report -->
+                    <div class="report-section" id="appointments-report">
+                        <div class="report-metrics">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Tổng lịch hẹn</h3>
+                                </div>
+                                <div class="metric-value">8,547</div>
+                                <div class="metric-description">Từ đầu năm đến nay</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Tỷ lệ hoàn thành</h3>
+                                </div>
+                                <div class="metric-value">89%</div>
+                                <div class="metric-description">Trên tổng số lịch hẹn</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Thời gian chờ trung bình</h3>
+                                </div>
+                                <div class="metric-value">3.2 ngày</div>
+                                <div class="metric-description">Từ đặt lịch đến khám</div>
+                            </div>
+                        </div>
+
+                        <div class="report-charts">
+                            <div class="chart-container">
+                                <h3>Lịch hẹn theo trạng thái</h3>
+                                <canvas id="appointmentStatusChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Lịch hẹn theo giờ trong ngày</h3>
+                                <canvas id="appointmentTimeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payments Section -->
+            <section id="payments-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý thanh toán</h1>
+                    <p>Theo dõi và quản lý tất cả giao dịch thanh toán</p>
+                </div>
+
+                <div class="payments-toolbar">
+                    <div class="payment-filters">
+                        <select class="filter-select" onchange="filterPayments()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="pending">Đang xử lý</option>
+                            <option value="failed">Thất bại</option>
+                            <option value="refunded">Hoàn tiền</option>
+                        </select>
+                        <select class="filter-select" onchange="filterPaymentMethod()">
+                            <option value="all">Tất cả phương thức</option>
+                            <option value="momo">MOMO</option>
+                            <option value="vnpay">VNPAY</option>
+                            <option value="card">Thẻ tín dụng</option>
+                            <option value="bank">Chuyển khoản</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm giao dịch..." onkeyup="searchPayments()">
+                    </div>
+                    <button class="btn-primary" onclick="exportPayments()">
+                        <i class="fas fa-download"></i>
+                        Xuất dữ liệu
+                    </button>
+                </div>
+
+                <div class="payments-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã giao dịch</th>
+                                <th>Người dùng</th>
+                                <th>Dịch vụ</th>
+                                <th>Số tiền</th>
+                                <th>Phương thức</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody">
+                            <tr>
+                                <td><strong>TXN001234</strong></td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/32x32/E94B3C/FFFFFF?text=PT" alt="User">
+                                        <div>
+                                            <strong>Nguyễn Thị A</strong>
+                                            <br><small>USR001</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Khám tổng quát</td>
+                                <td><strong>300,000 VND</strong></td>
+                                <td>
+                                    <div class="payment-method">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span>MOMO</span>
+                                    </div>
+                                </td>
+                                <td>25/11/2024 14:30</td>
+                                <td><span class="payment-status completed">Hoàn thành</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewPayment(1)">Xem</button>
+                                        <button class="btn-small outline" onclick="refundPayment(1)">Hoàn tiền</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>TXN001235</strong></td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/32x32/4A90E2/FFFFFF?text=PT" alt="User">
+                                        <div>
+                                            <strong>Trần Văn B</strong>
+                                            <br><small>USR002</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Siêu âm tim mạch</td>
+                                <td><strong>400,000 VND</strong></td>
+                                <td>
+                                    <div class="payment-method">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Thẻ tín dụng</span>
+                                    </div>
+                                </td>
+                                <td>25/11/2024 10:15</td>
+                                <td><span class="payment-status completed">Hoàn thành</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewPayment(2)">Xem</button>
+                                        <button class="btn-small outline" onclick="refundPayment(2)">Hoàn tiền</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>TXN001236</strong></td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://via.placeholder.com/32x32/F39C12/FFFFFF?text=PT" alt="User">
+                                        <div>
+                                            <strong>Lê Thị C</strong>
+                                            <br><small>USR003</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Xét nghiệm máu</td>
+                                <td><strong>150,000 VND</strong></td>
+                                <td>
+                                    <div class="payment-method">
+                                        <i class="fas fa-university"></i>
+                                        <span>Chuyển khoản</span>
+                                    </div>
+                                </td>
+                                <td>24/11/2024 16:45</td>
+                                <td><span class="payment-status pending">Đang xử lý</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewPayment(3)">Xem</button>
+                                        <button class="btn-small danger" onclick="cancelPayment(3)">Hủy</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Payment Statistics -->
+                <div class="payment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2,850</div>
+                        <div class="stat-label">Giao dịch thành công</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98.5%</div>
+                        <div class="stat-label">Tỷ lệ thành công</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">856,500,000</div>
+                        <div class="stat-label">Tổng doanh thu (VND)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Yêu cầu hoàn tiền</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Section -->
+            <section id="content-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý nội dung</h1>
+                    <p>Quản lý bài viết, tin tức và nội dung trên website</p>
+                </div>
+
+                <div class="content-toolbar">
+                    <div class="content-filters">
+                        <select class="filter-select" onchange="filterContent()">
+                            <option value="all">Tất cả loại</option>
+                            <option value="news">Tin tức</option>
+                            <option value="articles">Bài viết</option>
+                            <option value="announcements">Thông báo</option>
+                            <option value="guides">Hướng dẫn</option>
+                        </select>
+                        <select class="filter-select" onchange="filterContentStatus()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="published">Đã xuất bản</option>
+                            <option value="draft">Bản nháp</option>
+                            <option value="scheduled">Lên lịch</option>
+                            <option value="archived">Đã lưu trữ</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm nội dung..." onkeyup="searchContent()">
+                    </div>
+                    <button class="btn-primary" onclick="addNewContent()">
+                        <i class="fas fa-plus"></i>
+                        Thêm nội dung
+                    </button>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="content-image">
+                            <img src="https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=News" alt="Content">
+                            <div class="content-status published">Đã xuất bản</div>
+                        </div>
+                        <div class="content-info">
+                            <h3>Phòng ngừa bệnh tim mạch hiệu quả từ lối sống</h3>
+                            <p class="content-meta">
+                                <span><i class="fas fa-user"></i> BS. Nguyễn Văn A</span>
+                                <span><i class="fas fa-calendar"></i> 25/11/2024</span>
+                                <span><i class="fas fa-eye"></i> 2,456 lượt xem</span>
+                            </p>
+                            <p class="content-excerpt">Bệnh tim mạch là nguyên nhân gây tử vong hàng đầu trên thế giới. Bài viết cung cấp giải pháp phòng ngừa hiệu quả...</p>
+                            <div class="content-tags">
+                                <span class="tag">Tim mạch</span>
+                                <span class="tag">Phòng ngừa</span>
+                                <span class="tag">Sức khỏe</span>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-small outline" onclick="viewContent(1)">Xem</button>
+                                <button class="btn-small outline" onclick="editContent(1)">Sửa</button>
+                                <button class="btn-small danger" onclick="deleteContent(1)">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-image">
+                            <img src="https://via.placeholder.com/300x200/E94B3C/FFFFFF?text=Article" alt="Content">
+                            <div class="content-status draft">Bản nháp</div>
+                        </div>
+                        <div class="content-info">
+                            <h3>Hướng dẫn sử dụng hệ thống MedBooking</h3>
+                            <p class="content-meta">
+                                <span><i class="fas fa-user"></i> Admin</span>
+                                <span><i class="fas fa-calendar"></i> 20/11/2024</span>
+                                <span><i class="fas fa-eye"></i> 0 lượt xem</span>
+                            </p>
+                            <p class="content-excerpt">Hướng dẫn chi tiết cách sử dụng hệ thống đặt lịch khám bệnh online MedBooking...</p>
+                            <div class="content-tags">
+                                <span class="tag">Hướng dẫn</span>
+                                <span class="tag">Sử dụng</span>
+                                <span class="tag">MedBooking</span>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-small outline" onclick="viewContent(2)">Xem</button>
+                                <button class="btn-small outline" onclick="editContent(2)">Sửa</button>
+                                <button class="btn-small primary" onclick="publishContent(2)">Xuất bản</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="content-image">
+                            <img src="https://via.placeholder.com/300x200/F39C12/FFFFFF?text=Announcement" alt="Content">
+                            <div class="content-status published">Đã xuất bản</div>
+                        </div>
+                        <div class="content-info">
+                            <h3>Thông báo bảo trì hệ thống</h3>
+                            <p class="content-meta">
+                                <span><i class="fas fa-user"></i> Admin</span>
+                                <span><i class="fas fa-calendar"></i> 18/11/2024</span>
+                                <span><i class="fas fa-eye"></i> 1,234 lượt xem</span>
+                            </p>
+                            <p class="content-excerpt">Hệ thống sẽ được bảo trì vào ngày 25/11/2024 từ 02:00 - 04:00. Trong thời gian bảo trì...</p>
+                            <div class="content-tags">
+                                <span class="tag">Thông báo</span>
+                                <span class="tag">Bảo trì</span>
+                                <span class="tag">Hệ thống</span>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-small outline" onclick="viewContent(3)">Xem</button>
+                                <button class="btn-small outline" onclick="editContent(3)">Sửa</button>
+                                <button class="btn-small danger" onclick="deleteContent(3)">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Statistics -->
+                <div class="content-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Bài viết đã xuất bản</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Bài viết nháp</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45,678</div>
+                        <div class="stat-label">Tổng lượt xem</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.6</div>
+                        <div class="stat-label">Đánh giá trung bình</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Section -->
+            <section id="security-section" class="content-section">
+                <div class="section-header">
+                    <h1>Bảo mật hệ thống</h1>
+                    <p>Giám sát và quản lý bảo mật hệ thống</p>
+                </div>
+
+                <!-- Security Overview -->
+                <div class="security-overview">
+                    <div class="security-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Trạng thái bảo mật</h3>
+                                <p class="status good">Tốt</p>
+                                <span>Cập nhật lần cuối: 25/11/2024 08:00</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-user-lock"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Đăng nhập thất bại</h3>
+                                <p class="number">5</p>
+                                <span>Trong 24 giờ qua</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Mật khẩu đã thay đổi</h3>
+                                <p class="number">12</p>
+                                <span>Trong tháng này</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="security-settings">
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Thiết lập bảo mật</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Mật khẩu tối thiểu</label>
+                                    <p>8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSecuritySetting('passwordPolicy')">Thay đổi</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Thời gian phiên đăng nhập</label>
+                                    <p>24 giờ</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSecuritySetting('sessionTimeout')">Thay đổi</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Xác thực hai yếu tố (2FA)</label>
+                                    <p>Bắt buộc cho quản trị viên, khuyến nghị cho bác sĩ</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="enable2FA" checked>
+                                    <label for="enable2FA"></label>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Giới hạn đăng nhập thất bại</label>
+                                    <p>5 lần trong 30 phút, khóa tài khoản 1 giờ</p>
+                                </div>
+                                <button class="btn-outline small" onclick="editSecuritySetting('loginAttempts')">Thay đổi</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Logs -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Nhật ký bảo mật</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="security-log">
+                                <div class="log-item">
+                                    <div class="log-time">14:32:15</div>
+                                    <div class="log-content">
+                                        <span class="log-user">admin</span>
+                                        <span class="log-action">đăng nhập thành công</span>
+                                        <span class="log-ip">192.168.1.100</span>
+                                    </div>
+                                </div>
+                                <div class="log-item warning">
+                                    <div class="log-time">14:15:22</div>
+                                    <div class="log-content">
+                                        <span class="log-user">unknown</span>
+                                        <span class="log-action">đăng nhập thất bại</span>
+                                        <span class="log-ip">203.162.1.45</span>
+                                    </div>
+                                </div>
+                                <div class="log-item">
+                                    <div class="log-time">13:45:10</div>
+                                    <div class="log-content">
+                                        <span class="log-user">admin</span>
+                                        <span class="log-action">thay đổi mật khẩu</span>
+                                        <span class="log-ip">192.168.1.100</span>
+                                    </div>
+                                </div>
+                                <div class="log-item">
+                                    <div class="log-time">13:22:05</div>
+                                    <div class="log-content">
+                                        <span class="log-user">bs.nguyenvana</span>
+                                        <span class="log-action">cập nhật hồ sơ bệnh nhân</span>
+                                        <span class="log-ip">192.168.1.105</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="log-actions">
+                                <button class="btn-outline small" onclick="viewAllLogs()">Xem tất cả</button>
+                                <button class="btn-outline small" onclick="exportSecurityLogs()">Xuất nhật ký</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Actions -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>Hành động bảo mật</h3>
+                        </div>
+                        <div class="settings-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Kiểm tra lỗ hổng bảo mật</label>
+                                    <p>Quét và phát hiện lỗ hổng bảo mật trong hệ thống</p>
+                                </div>
+                                <button class="btn-primary small" onclick="runSecurityScan()">Chạy quét</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Cập nhật bản vá bảo mật</label>
+                                    <p>Cài đặt các bản vá bảo mật mới nhất</p>
+                                </div>
+                                <button class="btn-outline small" onclick="checkSecurityUpdates()">Kiểm tra</button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label>Sao lưu dữ liệu khẩn cấp</label>
+                                    <p>Tạo bản sao lưu khẩn cấp của tất cả dữ liệu</p>
+                                </div>
+                                <button class="btn-primary small" onclick="emergencyBackup()">Sao lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="userModalTitle">Thêm người dùng mới</h3>
+                <span class="close" onclick="closeUserModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="user-form" id="userForm">
+                    <div class="form-section">
+                        <h4>Thông tin cá nhân</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userFirstName">Họ</label>
+                                <input type="text" id="userFirstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="userLastName">Tên</label>
+                                <input type="text" id="userLastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Email</label>
+                            <input type="email" id="userEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">Số điện thoại</label>
+                            <input type="tel" id="userPhone" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userRole">Vai trò</label>
+                                <select id="userRole" required>
+                                    <option value="">Chọn vai trò</option>
+                                    <option value="patient">Bệnh nhân</option>
+                                    <option value="doctor">Bác sĩ</option>
+                                    <option value="staff">Nhân viên</option>
+                                    <option value="admin">Quản trị viên</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="userStatus">Trạng thái</label>
+                                <select id="userStatus" required>
+                                    <option value="active">Hoạt động</option>
+                                    <option value="inactive">Không hoạt động</option>
+                                    <option value="suspended">Tạm khóa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" id="doctorFields" style="display: none;">
+                        <h4>Thông tin chuyên môn (Bác sĩ)</h4>
+                        <div class="form-group">
+                            <label for="doctorSpecialty">Chuyên khoa</label>
+                            <select id="doctorSpecialty">
+                                <option value="">Chọn chuyên khoa</option>
+                                <option value="cardiology">Tim mạch</option>
+                                <option value="neurology">Thần kinh</option>
+                                <option value="orthopedics">Cơ xương khớp</option>
+                                <option value="pediatrics">Nhi khoa</option>
+                                <option value="gynecology">Sản phụ khoa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="doctorLicense">Số giấy phép hành nghề</label>
+                            <input type="text" id="doctorLicense">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctorExperience">Kinh nghiệm (năm)</label>
+                            <input type="number" id="doctorExperience">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" onclick="closeUserModal()">Hủy</button>
+                        <button type="submit" class="btn-primary">Lưu người dùng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
+
+

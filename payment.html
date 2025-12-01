@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - MedBooking</title>
+    <link rel="stylesheet" href="payment.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html">Trang chủ</a>
+                    <a href="services.html">Dịch vụ</a>
+                    <a href="appointment-booking.html">Đặt lịch</a>
+                    <a href="news.html">Tin tức</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='login.html'">Đăng nhập</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login.html?form=register'">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Payment Container -->
+    <div class="payment-container">
+        <div class="container">
+            <!-- Progress Steps -->
+            <div class="payment-progress">
+                <div class="progress-step completed">
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="step-info">
+                        <h4>Đặt lịch</h4>
+                        <p>Hoàn thành</p>
+                    </div>
+                </div>
+                <div class="progress-connector completed"></div>
+                <div class="progress-step active">
+                    <div class="step-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="step-info">
+                        <h4>Thanh toán</h4>
+                        <p>Đang thực hiện</p>
+                    </div>
+                </div>
+                <div class="progress-connector"></div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="step-info">
+                        <h4>Hoàn thành</h4>
+                        <p>Chờ xử lý</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-content">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h3>Thông tin đơn hàng</h3>
+                        <div class="order-number">#MB2024001</div>
+                    </div>
+
+                    <div class="appointment-details">
+                        <div class="service-info">
+                            <div class="service-icon">
+                                <i class="fas fa-stethoscope"></i>
+                            </div>
+                            <div class="service-text">
+                                <h4>Khám tổng quát</h4>
+                                <p>BS. Nguyễn Văn A - Tim mạch</p>
+                                <p class="hospital">Bệnh viện Việt Đức</p>
+                            </div>
+                        </div>
+
+                        <div class="appointment-time">
+                            <i class="fas fa-calendar"></i>
+                            <span>25/12/2024 - 14:30</span>
+                        </div>
+
+                        <div class="appointment-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>40 Tràng Thi, Hoàn Kiếm, Hà Nội</span>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Phí khám</span>
+                            <span>300,000 VND</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Phí tiện ích</span>
+                            <span>10,000 VND</span>
+                        </div>
+                        <div class="price-row discount">
+                            <span>Giảm giá</span>
+                            <span>-30,000 VND</span>
+                        </div>
+                        <div class="price-divider"></div>
+                        <div class="price-row total">
+                            <span><strong>Tổng cộng</strong></span>
+                            <span><strong>280,000 VND</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="payment-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Thanh toán thành công sẽ được xác nhận trong vòng 5-10 phút. Bạn sẽ nhận được email xác nhận.</p>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <div class="payment-form">
+                    <div class="form-header">
+                        <h3>Chọn phương thức thanh toán</h3>
+                        <p>An toàn & bảo mật với công nghệ mã hóa SSL 256-bit</p>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <!-- MOMO -->
+                        <div class="payment-method" onclick="selectPaymentMethod('momo')">
+                            <input type="radio" id="momo" name="paymentMethod" value="momo">
+                            <label for="momo" class="method-card">
+                                <div class="method-icon">
+                                    <img src="https://via.placeholder.com/60x60/F39C12/FFFFFF?text=MOMO" alt="MOMO">
+                                </div>
+                                <div class="method-info">
+                                    <h4>MOMO</h4>
+                                    <p>Thanh toán qua ví điện tử MOMO</p>
+                                    <div class="method-features">
+                                        <span class="feature">Nhanh chóng</span>
+                                        <span class="feature">An toàn</span>
+                                        <span class="feature">Phí thấp</span>
+                                    </div>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- VNPAY -->
+                        <div class="payment-method" onclick="selectPaymentMethod('vnpay')">
+                            <input type="radio" id="vnpay" name="paymentMethod" value="vnpay">
+                            <label for="vnpay" class="method-card">
+                                <div class="method-icon">
+                                    <img src="https://via.placeholder.com/60x60/4A90E2/FFFFFF?text=VNPAY" alt="VNPAY">
+                                </div>
+                                <div class="method-info">
+                                    <h4>VNPAY</h4>
+                                    <p>Thanh toán qua cổng VNPAY</p>
+                                    <div class="method-features">
+                                        <span class="feature">Nhiều ngân hàng</span>
+                                        <span class="feature">Bảo mật cao</span>
+                                        <span class="feature">Hỗ trợ 24/7</span>
+                                    </div>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div class="payment-method" onclick="selectPaymentMethod('bank')">
+                            <input type="radio" id="bank" name="paymentMethod" value="bank">
+                            <label for="bank" class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>Chuyển khoản ngân hàng</h4>
+                                    <p>Thanh toán qua chuyển khoản</p>
+                                    <div class="method-features">
+                                        <span class="feature">Không phí</span>
+                                        <span class="feature">Linh hoạt</span>
+                                        <span class="feature">Xác nhận nhanh</span>
+                                    </div>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Credit Card -->
+                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                            <input type="radio" id="card" name="paymentMethod" value="card">
+                            <label for="card" class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>Thẻ tín dụng/ghi nợ</h4>
+                                    <p>Visa, Mastercard, JCB</p>
+                                    <div class="method-features">
+                                        <span class="feature">Quốc tế</span>
+                                        <span class="feature">Tiện lợi</span>
+                                        <span class="feature">Trả góp</span>
+                                    </div>
+                                </div>
+                                <div class="method-check">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <div class="payment-details" id="paymentDetails">
+                        <!-- MOMO Details -->
+                        <div class="payment-detail-panel" id="momoPanel">
+                            <div class="panel-header">
+                                <h4>Thanh toán MOMO</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="momo-info">
+                                    <div class="qr-code">
+                                        <img src="https://via.placeholder.com/200x200/000000/FFFFFF?text=QR+Code" alt="QR Code">
+                                        <p>Quét mã QR bằng ứng dụng MOMO</p>
+                                    </div>
+                                    <div class="momo-details">
+                                        <div class="detail-row">
+                                            <span>Số tiền:</span>
+                                            <strong>280,000 VND</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Nội dung:</span>
+                                            <strong>MB2024001</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Người nhận:</span>
+                                            <strong>MedBooking</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="payment-actions">
+                                    <button class="btn btn-outline" onclick="openMomoApp()">Mở app MOMO</button>
+                                    <button class="btn btn-primary" onclick="confirmMomoPayment()">Tôi đã thanh toán</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VNPAY Details -->
+                        <div class="payment-detail-panel" id="vnpayPanel">
+                            <div class="panel-header">
+                                <h4>Thanh toán VNPAY</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="bank-selection">
+                                    <h5>Chọn ngân hàng</h5>
+                                    <div class="bank-grid">
+                                        <div class="bank-option" onclick="selectBank('vietcombank')">
+                                            <img src="https://via.placeholder.com/80x40/0054A5/FFFFFF?text=VCB" alt="Vietcombank">
+                                            <span>Vietcombank</span>
+                                        </div>
+                                        <div class="bank-option" onclick="selectBank('techcombank')">
+                                            <img src="https://via.placeholder.com/80x40/0066CC/FFFFFF?text=TCB" alt="Techcombank">
+                                            <span>Techcombank</span>
+                                        </div>
+                                        <div class="bank-option" onclick="selectBank('vietinbank')">
+                                            <img src="https://via.placeholder.com/80x40/006600/FFFFFF?text=VTB" alt="Vietinbank">
+                                            <span>Vietinbank</span>
+                                        </div>
+                                        <div class="bank-option" onclick="selectBank('bidv')">
+                                            <img src="https://via.placeholder.com/80x40/CC0000/FFFFFF?text=BIDV" alt="BIDV">
+                                            <span>BIDV</span>
+                                        </div>
+                                        <div class="bank-option" onclick="selectBank('agribank')">
+                                            <img src="https://via.placeholder.com/80x40/006633/FFFFFF?text=AGR" alt="Agribank">
+                                            <span>Agribank</span>
+                                        </div>
+                                        <div class="bank-option" onclick="selectBank('other')">
+                                            <span>Ngân hàng khác</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vnpay-details">
+                                    <div class="detail-row">
+                                        <span>Số tiền:</span>
+                                        <strong>280,000 VND</strong>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span>Mã đơn hàng:</span>
+                                        <strong>MB2024001</strong>
+                                    </div>
+                                </div>
+                                <div class="payment-actions">
+                                    <button class="btn btn-primary" onclick="proceedToVnpay()">Tiến hành thanh toán</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Details -->
+                        <div class="payment-detail-panel" id="bankPanel">
+                            <div class="panel-header">
+                                <h4>Chuyển khoản ngân hàng</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="bank-info">
+                                    <div class="bank-details">
+                                        <h5>Thông tin tài khoản</h5>
+                                        <div class="detail-row">
+                                            <span>Ngân hàng:</span>
+                                            <strong>Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank)</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Số tài khoản:</span>
+                                            <strong>1234567890</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Chủ tài khoản:</span>
+                                            <strong>CÔNG TY TNHH MedBooking</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Số tiền:</span>
+                                            <strong>280,000 VND</strong>
+                                        </div>
+                                        <div class="detail-row">
+                                            <span>Nội dung:</span>
+                                            <strong>MB2024001</strong>
+                                        </div>
+                                    </div>
+                                    <div class="qr-code">
+                                        <img src="https://via.placeholder.com/150x150/000000/FFFFFF?text=Bank+QR" alt="Bank QR">
+                                        <p>Quét mã để chuyển khoản</p>
+                                    </div>
+                                </div>
+                                <div class="transfer-notice">
+                                    <i class="fas fa-info-circle"></i>
+                                    <p>Sau khi chuyển khoản, hệ thống sẽ tự động xác nhận trong vòng 5-15 phút. Bạn cũng có thể tải lên hóa đơn chuyển khoản để được xử lý nhanh hơn.</p>
+                                </div>
+                                <div class="upload-section">
+                                    <label for="transferReceipt" class="upload-btn">
+                                        <i class="fas fa-upload"></i>
+                                        Tải lên hóa đơn chuyển khoản
+                                    </label>
+                                    <input type="file" id="transferReceipt" accept="image/*,.pdf" style="display: none;">
+                                </div>
+                                <div class="payment-actions">
+                                    <button class="btn btn-primary" onclick="confirmBankTransfer()">Tôi đã chuyển khoản</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Credit Card Details -->
+                        <div class="payment-detail-panel" id="cardPanel">
+                            <div class="panel-header">
+                                <h4>Thanh toán thẻ tín dụng</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="card-form">
+                                    <div class="form-group">
+                                        <label for="cardNumber">Số thẻ</label>
+                                        <div class="input-group">
+                                            <i class="fas fa-credit-card"></i>
+                                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                                            <div class="card-icons">
+                                                <i class="fab fa-cc-visa"></i>
+                                                <i class="fab fa-cc-mastercard"></i>
+                                                <i class="fab fa-cc-jcb"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="expiryDate">Ngày hết hạn</label>
+                                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cvv">CVV</label>
+                                            <input type="text" id="cvv" placeholder="123" maxlength="4">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardName">Tên chủ thẻ</label>
+                                        <input type="text" id="cardName" placeholder="NGUYEN VAN A">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="saveCard">
+                                            <span class="checkmark"></span>
+                                            Lưu thông tin thẻ cho lần thanh toán sau
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="payment-actions">
+                                    <button class="btn btn-primary" onclick="processCardPayment()">Thanh toán</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="payment-terms">
+                        <label class="checkbox">
+                            <input type="checkbox" id="acceptTerms" required>
+                            <span class="checkmark"></span>
+                            Tôi đồng ý với <a href="#" target="_blank">Điều khoản sử dụng</a> và <a href="#" target="_blank">Chính sách hoàn tiền</a>
+                        </label>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button class="btn btn-outline" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i>
+                            Quay lại
+                        </button>
+                        <button class="btn btn-primary btn-large" onclick="processPayment()" id="payButton">
+                            <i class="fas fa-lock"></i>
+                            Thanh toán 280,000 VND
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="success-animation">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Thanh toán thành công!</h3>
+                <p>Đơn hàng #MB2024001 của bạn đã được xử lý thành công.</p>
+                <div class="success-details">
+                    <div class="detail-row">
+                        <span>Mã giao dịch:</span>
+                        <strong>TXN2024001</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Thời gian:</span>
+                        <strong id="transactionTime">25/11/2024 14:30:25</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Phương thức:</span>
+                        <strong id="paymentMethodUsed">MOMO</strong>
+                    </div>
+                </div>
+                <div class="success-actions">
+                    <button class="btn btn-outline" onclick="downloadReceipt()">Tải hóa đơn</button>
+                    <button class="btn btn-primary" onclick="goToDashboard()">Xem lịch hẹn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div id="processingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="processing-animation">
+                    <div class="spinner"></div>
+                </div>
+                <h3>Đang xử lý thanh toán...</h3>
+                <p>Vui lòng không đóng cửa sổ này trong quá trình thanh toán.</p>
+                <div class="processing-steps">
+                    <div class="step completed">
+                        <i class="fas fa-check"></i>
+                        <span>Kiểm tra thông tin</span>
+                    </div>
+                    <div class="step active">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <span>Kết nối cổng thanh toán</span>
+                    </div>
+                    <div class="step">
+                        <i class="far fa-circle"></i>
+                        <span>Xác nhận thanh toán</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="payment.js"></script>
+</body>
+</html>
+
+
+

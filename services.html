@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ Y Tế - MedBooking</title>
+    <link rel="stylesheet" href="services.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html">Trang chủ</a>
+                    <a href="services.html" class="active">Dịch vụ</a>
+                    <a href="appointment-booking.html">Đặt lịch</a>
+                    <a href="news.html">Tin tức</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='login.html'">Đăng nhập</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login.html?form=register'">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Dịch Vụ Y Tế Chuyên Nghiệp</h1>
+                <p>Khám phá các dịch vụ y tế chất lượng cao với đội ngũ bác sĩ chuyên khoa hàng đầu</p>
+
+                <!-- Service Categories -->
+                <div class="service-categories">
+                    <button class="category-btn active" onclick="filterServices('all')">
+                        <i class="fas fa-th-list"></i>
+                        Tất cả
+                    </button>
+                    <button class="category-btn" onclick="filterServices('kham-chua-benh')">
+                        <i class="fas fa-stethoscope"></i>
+                        Khám chữa bệnh
+                    </button>
+                    <button class="category-btn" onclick="filterServices('xet-nghiem')">
+                        <i class="fas fa-flask"></i>
+                        Xét nghiệm
+                    </button>
+                    <button class="category-btn" onclick="filterServices('cham-soc-suc-khoe')">
+                        <i class="fas fa-heartbeat"></i>
+                        Chăm sóc sức khỏe
+                    </button>
+                    <button class="category-btn" onclick="filterServices('dich-vu-khac')">
+                        <i class="fas fa-plus"></i>
+                        Dịch vụ khác
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section">
+        <div class="container">
+            <!-- Services Header -->
+            <div class="services-header">
+                <div class="section-title">
+                    <h2>Dịch Vụ Nổi Bật</h2>
+                    <p>Chọn dịch vụ phù hợp với nhu cầu sức khỏe của bạn</p>
+                </div>
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm dịch vụ..." onkeyup="searchServices()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="services-grid" id="servicesGrid">
+                <!-- Service Cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More -->
+            <div class="load-more" id="loadMore">
+                <button class="btn btn-outline" onclick="loadMoreServices()">
+                    <i class="fas fa-plus"></i>
+                    Xem thêm dịch vụ
+                </button>
+            </div>
+        </section>
+    </section>
+
+    <!-- Service Detail Modal -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <span class="close" onclick="closeServiceModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="service-detail">
+                    <div class="service-header">
+                        <div class="service-icon-large">
+                            <i id="modalServiceIcon" class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="service-info">
+                            <h2 id="modalServiceName">Khám Tổng Quát</h2>
+                            <p id="modalServiceCategory" class="service-category">Khám chữa bệnh</p>
+                            <div class="service-rating">
+                                <div class="stars" id="modalServiceStars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span id="modalServiceRating">4.8 (245 đánh giá)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-content">
+                        <div class="service-tabs">
+                            <button class="tab-btn active" onclick="switchServiceTab('overview')">Tổng quan</button>
+                            <button class="tab-btn" onclick="switchServiceTab('details')">Chi tiết</button>
+                            <button class="tab-btn" onclick="switchServiceTab('pricing')">Giá cả</button>
+                            <button class="tab-btn" onclick="switchServiceTab('reviews')">Đánh giá</button>
+                        </div>
+
+                        <div class="tab-content">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane active" id="overviewTab">
+                                <div class="service-overview">
+                                    <h3>Mô tả dịch vụ</h3>
+                                    <p id="modalServiceDescription">Khám tổng quát là dịch vụ khám sức khỏe toàn diện, giúp phát hiện sớm các bệnh tật và có kế hoạch phòng ngừa hiệu quả.</p>
+
+                                    <h3>Lợi ích</h3>
+                                    <ul id="modalServiceBenefits">
+                                        <li>Phát hiện sớm bệnh tật</li>
+                                        <li>Tư vấn chế độ ăn uống hợp lý</li>
+                                        <li>Hướng dẫn tập luyện phù hợp</li>
+                                        <li>Theo dõi sức khỏe định kỳ</li>
+                                    </ul>
+
+                                    <h3>Đối tượng phù hợp</h3>
+                                    <p id="modalServiceTarget">Người lớn từ 18 tuổi trở lên muốn kiểm tra sức khỏe định kỳ hoặc có dấu hiệu bất thường về sức khỏe.</p>
+
+                                    <h3>Thời gian thực hiện</h3>
+                                    <p id="modalServiceDuration">30-45 phút</p>
+                                </div>
+                            </div>
+
+                            <!-- Details Tab -->
+                            <div class="tab-pane" id="detailsTab">
+                                <div class="service-details">
+                                    <h3>Quy trình thực hiện</h3>
+                                    <div class="process-steps" id="modalServiceProcess">
+                                        <div class="step">
+                                            <div class="step-number">1</div>
+                                            <div class="step-content">
+                                                <h4>Đón tiếp và khai thác thông tin</h4>
+                                                <p>Bác sĩ hỏi về tiền sử bệnh, triệu chứng và thói quen sống</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">2</div>
+                                            <div class="step-content">
+                                                <h4>Khám lâm sàng</h4>
+                                                <p>Kiểm tra các dấu hiệu sinh tồn và khám tổng thể</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">3</div>
+                                            <div class="step-content">
+                                                <h4>Yêu cầu cận lâm sàng</h4>
+                                                <p>Chỉ định các xét nghiệm cần thiết nếu có</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">4</div>
+                                            <div class="step-content">
+                                                <h4>Kết luận và tư vấn</h4>
+                                                <p>Bác sĩ đưa ra kết luận và lời khuyên chăm sóc sức khỏe</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h3>Chuẩn bị trước khi khám</h3>
+                                    <ul id="modalServicePreparation">
+                                        <li>Nhịn ăn 8-10 tiếng nếu cần xét nghiệm máu</li>
+                                        <li>Mang theo kết quả xét nghiệm cũ nếu có</li>
+                                        <li>Chuẩn bị danh sách thuốc đang dùng</li>
+                                        <li>Mang theo giấy tờ tùy thân</li>
+                                    </ul>
+
+                                    <h3>Lưu ý sau khám</h3>
+                                    <p id="modalServiceAftercare">Theo dõi các triệu chứng nếu có và tái khám theo lịch hẹn của bác sĩ.</p>
+                                </div>
+                            </div>
+
+                            <!-- Pricing Tab -->
+                            <div class="tab-pane" id="pricingTab">
+                                <div class="service-pricing">
+                                    <div class="pricing-table">
+                                        <div class="pricing-header">
+                                            <h3>Bảng giá dịch vụ</h3>
+                                        </div>
+                                        <div class="pricing-body" id="modalServicePricing">
+                                            <div class="pricing-item">
+                                                <div class="pricing-name">Khám tổng quát cơ bản</div>
+                                                <div class="pricing-details">Khám lâm sàng + tư vấn</div>
+                                                <div class="pricing-price">250,000 VND</div>
+                                            </div>
+                                            <div class="pricing-item featured">
+                                                <div class="pricing-name">Khám tổng quát nâng cao</div>
+                                                <div class="pricing-details">Khám lâm sàng + XN máu + siêu âm bụng</div>
+                                                <div class="pricing-price">450,000 VND</div>
+                                                <div class="pricing-badge">Phổ biến</div>
+                                            </div>
+                                            <div class="pricing-item">
+                                                <div class="pricing-name">Khám tổng quát VIP</div>
+                                                <div class="pricing-details">Khám đầy đủ + tất cả xét nghiệm</div>
+                                                <div class="pricing-price">750,000 VND</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pricing-info">
+                                        <h4>Thông tin thanh toán</h4>
+                                        <ul>
+                                            <li>Giá đã bao gồm VAT</li>
+                                            <li>Thanh toán trực tuyến hoặc tại quầy</li>
+                                            <li>Hỗ trợ thanh toán bằng thẻ tín dụng</li>
+                                            <li>Hoàn tiền 100% nếu hủy trước 24h</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reviews Tab -->
+                            <div class="tab-pane" id="reviewsTab">
+                                <div class="service-reviews">
+                                    <div class="reviews-summary">
+                                        <div class="rating-overview">
+                                            <span class="rating-number">4.8</span>
+                                            <div class="stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <span class="total-reviews">245 đánh giá</span>
+                                        </div>
+                                        <div class="rating-breakdown">
+                                            <div class="rating-bar">
+                                                <span>5 sao</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 70%"></div>
+                                                </div>
+                                                <span>171</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span>4 sao</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 20%"></div>
+                                                </div>
+                                                <span>49</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span>3 sao</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 8%"></div>
+                                                </div>
+                                                <span>20</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span>2 sao</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 1%"></div>
+                                                </div>
+                                                <span>3</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span>1 sao</span>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 1%"></div>
+                                                </div>
+                                                <span>2</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="reviews-list">
+                                        <div class="review-item">
+                                            <div class="review-header">
+                                                <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=PT" alt="Patient">
+                                                <div>
+                                                    <h4>Nguyễn Thị A</h4>
+                                                    <div class="review-rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <span class="review-date">15/11/2024</span>
+                                            </div>
+                                            <p class="review-content">Dịch vụ khám tổng quát rất chuyên nghiệp. Bác sĩ giải thích rõ ràng, phòng khám sạch sẽ. Rất hài lòng!</p>
+                                        </div>
+
+                                        <div class="review-item">
+                                            <div class="review-header">
+                                                <img src="https://via.placeholder.com/40x40/50E3C2/FFFFFF?text=PT" alt="Patient">
+                                                <div>
+                                                    <h4>Trần Văn B</h4>
+                                                    <div class="review-rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star-half-alt"></i>
+                                                    </div>
+                                                </div>
+                                                <span class="review-date">12/11/2024</span>
+                                            </div>
+                                            <p class="review-content">Khám khá kỹ, được tư vấn chi tiết về chế độ ăn uống. Giá cả hợp lý so với chất lượng dịch vụ.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-large" onclick="bookService()">
+                            <i class="fas fa-calendar-plus"></i>
+                            Đặt lịch ngay
+                        </button>
+                        <button class="btn btn-outline" onclick="closeServiceModal()">
+                            <i class="fas fa-times"></i>
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Câu Hỏi Thường Gặp</h2>
+                <p>Giải đáp những thắc mắc phổ biến về dịch vụ y tế</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Làm thế nào để đặt lịch khám?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bạn có thể đặt lịch khám qua website bằng cách chọn dịch vụ, chọn bác sĩ và thời gian phù hợp. Sau đó điền thông tin cá nhân và thanh toán để hoàn tất.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Thời gian làm việc của bệnh viện?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bệnh viện làm việc từ 7:00 - 17:00 các ngày trong tuần (Thứ 2 - Thứ 6) và 7:00 - 12:00 vào Thứ 7. Một số dịch vụ khẩn cấp hoạt động 24/7.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Chính sách hủy lịch khám?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bạn có thể hủy lịch khám miễn phí trước 24 giờ. Nếu hủy trong vòng 24 giờ, sẽ mất 50% phí khám. Hủy trong vòng 2 giờ sẽ mất 100% phí.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Có bảo hiểm y tế không?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Hệ thống chấp nhận tất cả thẻ BHYT của Việt Nam. Bạn cần xuất trình thẻ BHYT khi đến khám để được hưởng quyền lợi bảo hiểm.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Làm thế nào để xem kết quả khám?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kết quả khám sẽ được gửi qua email và SMS trong vòng 24-48 giờ sau khi khám. Bạn cũng có thể xem kết quả trực tuyến trên tài khoản cá nhân.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Cần Tư Vấn Thêm?</h2>
+                    <p>Liên hệ với chúng tôi để được tư vấn về dịch vụ y tế phù hợp nhất</p>
+
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Hotline</h4>
+                                <p>1900-xxxx</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@medbooking.vn</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-comments"></i>
+                            <div>
+                                <h4>Chat trực tuyến</h4>
+                                <p>Hỗ trợ 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Gửi Tin Nhắn</h3>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" placeholder="Họ và tên" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="Số điện thoại" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Chọn chủ đề</option>
+                                <option value="booking">Đặt lịch khám</option>
+                                <option value="pricing">Giá cả dịch vụ</option>
+                                <option value="insurance">Bảo hiểm y tế</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="4" placeholder="Nội dung tin nhắn..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Gửi tin nhắn
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="services.js"></script>
+</body>
+</html>
+
+
+

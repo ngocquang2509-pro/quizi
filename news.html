@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức Sức Khỏe - MedBooking</title>
+    <link rel="stylesheet" href="news.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html">Trang chủ</a>
+                    <a href="services.html">Dịch vụ</a>
+                    <a href="appointment-booking.html">Đặt lịch</a>
+                    <a href="news.html" class="active">Tin tức</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='login.html'">Đăng nhập</button>
+                    <button class="btn btn-primary" onclick="window.location.href='login.html?form=register'">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Tin Tức Sức Khỏe & Y Tế</h1>
+                <p>Cập nhật thông tin y tế, sức khỏe mới nhất từ các chuyên gia hàng đầu</p>
+
+                <!-- Featured Article -->
+                <div class="featured-article">
+                    <div class="featured-image">
+                        <img src="https://via.placeholder.com/600x400/4A90E2/FFFFFF?text=Featured+Article" alt="Bài viết nổi bật">
+                        <div class="featured-badge">Nổi bật</div>
+                    </div>
+                    <div class="featured-content">
+                        <div class="article-category">Sức khỏe tim mạch</div>
+                        <h2>Phòng ngừa bệnh tim mạch hiệu quả từ lối sống</h2>
+                        <p>Bệnh tim mạch là nguyên nhân gây tử vong hàng đầu trên thế giới. Bài viết này cung cấp các giải pháp phòng ngừa hiệu quả thông qua chế độ ăn uống và tập luyện phù hợp.</p>
+                        <div class="article-meta">
+                            <span><i class="fas fa-user"></i> BS. Nguyễn Văn A</span>
+                            <span><i class="fas fa-calendar"></i> 25/11/2024</span>
+                            <span><i class="fas fa-eye"></i> 2,456 lượt xem</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="openArticle(1)">Đọc ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Categories -->
+        <section class="categories-section">
+            <div class="container">
+                <div class="categories-grid">
+                    <div class="category-card" onclick="filterByCategory('suc-khoe-tong-quat')">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>Sức khỏe tổng quát</h3>
+                        <p>Kiến thức chăm sóc sức khỏe toàn diện</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('dinh-duong')">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Dinh dưỡng</h3>
+                        <p>Chế độ ăn uống lành mạnh</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('tap-luyen')">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Tập luyện</h3>
+                        <p>Bài tập và sức khỏe thể chất</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('benh-hoc')">
+                        <i class="fas fa-stethoscope"></i>
+                        <h3>Bệnh học</h3>
+                        <p>Thông tin về các bệnh lý phổ biến</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('phong-ngua')">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Phòng ngừa</h3>
+                        <p>Cách phòng tránh bệnh tật</p>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('suc-khoe-tam-than')">
+                        <i class="fas fa-brain"></i>
+                        <h3>Sức khỏe tâm thần</h3>
+                        <p>Chăm sóc sức khỏe tinh thần</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section class="articles-section">
+            <div class="container">
+                <!-- Filters and Search -->
+                <div class="articles-toolbar">
+                    <div class="filters">
+                        <select id="sortSelect" onchange="sortArticles()">
+                            <option value="newest">Mới nhất</option>
+                            <option value="oldest">Cũ nhất</option>
+                            <option value="popular">Phổ biến nhất</option>
+                            <option value="trending">Đang hot</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm bài viết..." onkeyup="searchArticles()">
+                    </div>
+                </div>
+
+                <!-- Articles Grid -->
+                <div class="articles-grid" id="articlesGrid">
+                    <!-- Articles will be populated by JavaScript -->
+                </div>
+
+                <!-- Load More -->
+                <div class="load-more" id="loadMore">
+                    <button class="btn btn-outline" onclick="loadMoreArticles()">
+                        <i class="fas fa-plus"></i>
+                        Xem thêm bài viết
+                    </button>
+                </div>
+
+                <!-- Newsletter Signup -->
+                <div class="newsletter-section">
+                    <div class="newsletter-content">
+                        <div class="newsletter-text">
+                            <h3>Nhận tin tức sức khỏe mới nhất</h3>
+                            <p>Đăng ký nhận bản tin để không bỏ lỡ những thông tin y tế quan trọng</p>
+                        </div>
+                        <div class="newsletter-form">
+                            <input type="email" placeholder="Nhập email của bạn" id="newsletterEmail">
+                            <button class="btn btn-primary" onclick="subscribeNewsletter()">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <span class="close" onclick="closeArticleModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <article class="article-detail">
+                    <header class="article-header">
+                        <div class="article-category" id="modalArticleCategory">Sức khỏe tim mạch</div>
+                        <h1 id="modalArticleTitle">Phòng ngừa bệnh tim mạch hiệu quả từ lối sống</h1>
+                        <div class="article-meta">
+                            <div class="author-info">
+                                <img src="https://via.placeholder.com/50x50/4A90E2/FFFFFF?text=Author" alt="Author" id="modalAuthorAvatar">
+                                <div>
+                                    <span class="author-name" id="modalAuthorName">BS. Nguyễn Văn A</span>
+                                    <span class="article-date" id="modalArticleDate">25/11/2024</span>
+                                </div>
+                            </div>
+                            <div class="article-stats">
+                                <span><i class="fas fa-eye"></i> <span id="modalArticleViews">2,456</span></span>
+                                <span><i class="fas fa-heart"></i> <span id="modalArticleLikes">128</span></span>
+                                <span><i class="fas fa-share"></i> <span id="modalArticleShares">23</span></span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="article-content">
+                        <div class="article-image">
+                            <img id="modalArticleImage" src="https://via.placeholder.com/800x400/4A90E2/FFFFFF?text=Article+Image" alt="Article Image">
+                            <div class="image-caption" id="modalImageCaption">Biểu đồ thống kê bệnh tim mạch trên thế giới</div>
+                        </div>
+
+                        <div class="article-body" id="modalArticleBody">
+                            <p>Bệnh tim mạch là một trong những nguyên nhân gây tử vong hàng đầu trên toàn cầu. Theo thống kê của Tổ chức Y tế Thế giới (WHO), mỗi năm có khoảng 17,9 triệu người tử vong vì bệnh tim mạch, chiếm khoảng 31% tổng số ca tử vong trên thế giới.</p>
+
+                            <h2>Nguyên nhân chính gây bệnh tim mạch</h2>
+                            <p>Các yếu tố nguy cơ gây bệnh tim mạch có thể được chia thành hai nhóm chính:</p>
+                            <ul>
+                                <li><strong>Yếu tố không thể thay đổi:</strong> Tuổi tác, giới tính, tiền sử gia đình</li>
+                                <li><strong>Yếu tố có thể kiểm soát:</strong> Hút thuốc, tăng huyết áp, cholesterol cao, tiểu đường, béo phì, ít vận động</li>
+                            </ul>
+
+                            <h2>Cách phòng ngừa bệnh tim mạch</h2>
+
+                            <h3>1. Chế độ ăn uống lành mạnh</h3>
+                            <p>Chế độ ăn DASH (Dietary Approaches to Stop Hypertension) được khuyến cáo cho người muốn phòng ngừa bệnh tim mạch:</p>
+                            <ul>
+                                <li>Tăng cường rau xanh, trái cây</li>
+                                <li>Giảm muối và thực phẩm chế biến sẵn</li>
+                                <li>Hạn chế chất béo bão hòa</li>
+                                <li>Bổ sung omega-3 từ cá</li>
+                            </ul>
+
+                            <h3>2. Duy trì cân nặng hợp lý</h3>
+                            <p>Béo phì là yếu tố nguy cơ quan trọng của bệnh tim mạch. Việc duy trì chỉ số BMI trong khoảng 18.5-24.9 có thể giảm nguy cơ mắc bệnh tim mạch đến 30-50%.</p>
+
+                            <h3>3. Tập luyện thể dục đều đặn</h3>
+                            <p>Tập luyện aerobic ít nhất 150 phút/tuần với cường độ trung bình có thể:</p>
+                            <ul>
+                                <li>Cải thiện chức năng tim mạch</li>
+                                <li>Giảm huyết áp</li>
+                                <li>Cải thiện cholesterol</li>
+                                <li>Giảm stress và cải thiện tâm trạng</li>
+                            </ul>
+
+                            <h3>4. Bỏ hút thuốc lá</h3>
+                            <p>Hút thuốc làm tăng nguy cơ nhồi máu cơ tim lên 2-4 lần. Việc bỏ hút thuốc có thể giảm nguy cơ này chỉ sau 1 năm và trở về mức bình thường sau 10-15 năm.</p>
+
+                            <h3>5. Quản lý stress</h3>
+                            <p>Stress kéo dài có thể dẫn đến tăng huyết áp và các vấn đề tim mạch. Các phương pháp quản lý stress hiệu quả:</p>
+                            <ul>
+                                <li>Thiền và hít thở sâu</li>
+                                <li>Tập yoga</li>
+                                <li>Nghỉ ngơi hợp lý</li>
+                                <li>Tìm sự hỗ trợ từ người thân</li>
+                            </ul>
+
+                            <h2>Kết luận</h2>
+                            <p>Phòng ngừa bệnh tim mạch không chỉ giúp chúng ta có một cuộc sống khỏe mạnh mà còn tiết kiệm chi phí điều trị. Bằng cách thay đổi lối sống khoa học, chúng ta có thể giảm đáng kể nguy cơ mắc các bệnh lý tim mạch nguy hiểm.</p>
+
+                            <p>Nếu bạn có các yếu tố nguy cơ hoặc triệu chứng bất thường, hãy đến khám bác sĩ để được tư vấn và điều trị kịp thời.</p>
+                        </div>
+
+                        <div class="article-tags">
+                            <span class="tag">Tim mạch</span>
+                            <span class="tag">Phòng ngừa</span>
+                            <span class="tag">Lối sống</span>
+                            <span class="tag">Sức khỏe</span>
+                        </div>
+
+                        <div class="article-actions">
+                            <button class="btn btn-outline" onclick="likeArticle()">
+                                <i class="fas fa-heart"></i>
+                                Thích
+                            </button>
+                            <button class="btn btn-outline" onclick="shareArticle()">
+                                <i class="fas fa-share"></i>
+                                Chia sẻ
+                            </button>
+                            <button class="btn btn-outline" onclick="bookmarkArticle()">
+                                <i class="fas fa-bookmark"></i>
+                                Lưu
+                            </button>
+                        </div>
+
+                        <!-- Related Articles -->
+                        <div class="related-articles">
+                            <h3>Bài viết liên quan</h3>
+                            <div class="related-grid">
+                                <div class="related-item" onclick="openArticle(2)">
+                                    <img src="https://via.placeholder.com/150x100/27ae60/FFFFFF?text=Related" alt="Related">
+                                    <div>
+                                        <h4>Các dấu hiệu sớm của bệnh tim mạch</h4>
+                                        <span>BS. Trần Thị B</span>
+                                    </div>
+                                </div>
+                                <div class="related-item" onclick="openArticle(3)">
+                                    <img src="https://via.placeholder.com/150x100/e67e22/FFFFFF?text=Related" alt="Related">
+                                    <div>
+                                        <h4>Chế độ ăn tốt cho người mắc bệnh tim</h4>
+                                        <span>BS. Lê Văn C</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-hospital"></i>
+                        <span>MedBooking</span>
+                    </div>
+                    <p>Nền tảng đặt lịch khám bệnh online hàng đầu Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên kết</h4>
+                    <ul>
+                        <li><a href="services.html">Dịch vụ y tế</a></li>
+                        <li><a href="appointment-booking.html">Đặt lịch khám</a></li>
+                        <li><a href="news.html">Tin tức sức khỏe</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Trung tâm trợ giúp</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 1900-xxxx</li>
+                        <li><i class="fas fa-envelope"></i> info@medbooking.vn</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MedBooking. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="news.js"></script>
+</body>
+</html>
+
+
+

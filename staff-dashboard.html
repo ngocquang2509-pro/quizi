@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Nhân Viên - MedBooking</title>
+    <link rel="stylesheet" href="staff-dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-hospital"></i>
+                <span>MedBooking</span>
+            </div>
+            <div class="header-right">
+                <div class="current-date">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentDate">Thứ Hai, 01/12/2024</span>
+                </div>
+                <div class="notifications">
+                    <button class="notification-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">7</span>
+                    </button>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h4>Thông báo</h4>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-plus"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Lịch hẹn mới cần xác nhận: Nguyễn Thị A - 08:00</p>
+                                    <span class="notification-time">5 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Cuộc gọi mới từ bệnh nhân Trần Văn B</p>
+                                    <span class="notification-time">15 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Bệnh nhân Lê Thị C đã check-in thành công</p>
+                                    <span class="notification-time">30 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Nhắc nhở: BS. Nguyễn Văn A có lịch khám trong 10 phút</p>
+                                    <span class="notification-time">1 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Email mới từ phòng kế hoạch</p>
+                                    <span class="notification-time">2 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Cảnh báo: Phòng khám số 3 cần dọn dẹp</p>
+                                    <span class="notification-time">3 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-calendar-times"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p>Lịch hẹn bị hủy: Phạm Văn D - 14:00</p>
+                                    <span class="notification-time">4 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-menu">
+                    <button class="user-btn" onclick="toggleUserMenu()">
+                        <img src="https://via.placeholder.com/40x40/F39C12/FFFFFF?text=NV" alt="Avatar" class="user-avatar">
+                        <span class="user-name">NV. Trần Thị Linh</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#profile"><i class="fas fa-user"></i> Hồ sơ cá nhân</a>
+                        <a href="#schedule"><i class="fas fa-calendar-alt"></i> Lịch làm việc</a>
+                        <a href="#settings"><i class="fas fa-cog"></i> Cài đặt</a>
+                        <div class="divider"></div>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" onclick="showSection('overview')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Tổng quan</span>
+                </a>
+                <a href="#appointments" class="nav-item" onclick="showSection('appointments')">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Quản lý lịch hẹn</span>
+                </a>
+                <a href="#checkin" class="nav-item" onclick="showSection('checkin')">
+                    <i class="fas fa-user-check"></i>
+                    <span>Check-in/Out</span>
+                </a>
+                <a href="#inquiries" class="nav-item" onclick="showSection('inquiries')">
+                    <i class="fas fa-headset"></i>
+                    <span>Hỗ trợ khách hàng</span>
+                </a>
+                <a href="#scheduling" class="nav-item" onclick="showSection('scheduling')">
+                    <i class="fas fa-clock"></i>
+                    <span>Lịch bác sĩ</span>
+                </a>
+                <a href="#patients" class="nav-item" onclick="showSection('patients')">
+                    <i class="fas fa-users"></i>
+                    <span>Quản lý bệnh nhân</span>
+                </a>
+                <a href="#rooms" class="nav-item" onclick="showSection('rooms')">
+                    <i class="fas fa-door-open"></i>
+                    <span>Quản lý phòng</span>
+                </a>
+                <a href="#reports" class="nav-item" onclick="showSection('reports')">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Báo cáo</span>
+                </a>
+                <a href="#messages" class="nav-item" onclick="showSection('messages')">
+                    <i class="fas fa-envelope"></i>
+                    <span>Tin nhắn</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview-section" class="content-section active">
+                <div class="section-header">
+                    <h1>Tổng quan</h1>
+                    <p>Chào mừng, NV. Trần Thị Linh</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon today-appointments">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>45</h3>
+                            <p>Lịch hẹn hôm nay</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon waiting">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>Đang chờ</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>28</h3>
+                            <p>Đã hoàn thành</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon inquiries">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>8</h3>
+                            <p>Thắc mắc mới</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Overview -->
+                <div class="overview-grid">
+                    <!-- Upcoming Appointments -->
+                    <div class="overview-card">
+                        <div class="card-header">
+                            <h3>Lịch hẹn sắp tới</h3>
+                            <button class="btn-link" onclick="showSection('appointments')">Xem tất cả</button>
+                        </div>
+                        <div class="appointment-list">
+                            <div class="appointment-item">
+                                <div class="time">08:00</div>
+                                <div class="details">
+                                    <h4>Nguyễn Thị A</h4>
+                                    <p>BS. Nguyễn Văn D - Nội tổng hợp</p>
+                                    <span class="status waiting">Chờ xác nhận</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn-small primary" onclick="confirmAppointment(1)">Xác nhận</button>
+                                </div>
+                            </div>
+                            <div class="appointment-item">
+                                <div class="time">08:30</div>
+                                <div class="details">
+                                    <h4>Trần Văn B</h4>
+                                    <p>BS. Trần Thị E - Tim mạch</p>
+                                    <span class="status confirmed">Đã xác nhận</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn-small outline" onclick="viewAppointment(2)">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="appointment-item">
+                                <div class="time">09:00</div>
+                                <div class="details">
+                                    <h4>Lê Thị C</h4>
+                                    <p>BS. Lê Văn F - Sản phụ khoa</p>
+                                    <span class="status in-progress">Đang khám</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn-small outline" onclick="viewAppointment(3)">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Status -->
+                    <div class="overview-card">
+                        <div class="card-header">
+                            <h3>Tình trạng phòng khám</h3>
+                            <button class="btn-link" onclick="showSection('rooms')">Quản lý</button>
+                        </div>
+                        <div class="room-status">
+                            <div class="room-item">
+                                <div class="room-number">101</div>
+                                <div class="room-info">
+                                    <span class="doctor">BS. Nguyễn Văn D</span>
+                                    <span class="status occupied">Đang sử dụng</span>
+                                </div>
+                            </div>
+                            <div class="room-item">
+                                <div class="room-number">102</div>
+                                <div class="room-info">
+                                    <span class="doctor">BS. Trần Thị E</span>
+                                    <span class="status occupied">Đang sử dụng</span>
+                                </div>
+                            </div>
+                            <div class="room-item">
+                                <div class="room-number">103</div>
+                                <div class="room-info">
+                                    <span class="status available">Sẵn sàng</span>
+                                </div>
+                            </div>
+                            <div class="room-item">
+                                <div class="room-number">104</div>
+                                <div class="room-info">
+                                    <span class="status cleaning">Đang dọn dẹp</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="overview-card">
+                        <div class="card-header">
+                            <h3>Hoạt động gần đây</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon checkin">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Nguyễn Thị A</strong> đã check-in</p>
+                                    <span class="activity-time">5 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon call">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p>Cuộc gọi từ <strong>Trần Văn B</strong></p>
+                                    <span class="activity-time">15 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon cancel">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Lê Thị C</strong> hủy lịch hẹn</p>
+                                    <span class="activity-time">30 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon complete">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p>Hoàn thành khám cho <strong>Phạm Văn D</strong></p>
+                                    <span class="activity-time">1 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Appointments Section -->
+            <section id="appointments-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý lịch hẹn</h1>
+                    <p>Xử lý và theo dõi tất cả lịch hẹn</p>
+                </div>
+
+                <div class="toolbar">
+                    <div class="filters">
+                        <select class="filter-select" onchange="filterAppointments()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="pending">Chờ xác nhận</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="in-progress">Đang khám</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                        <select class="filter-select" onchange="filterByDoctor()">
+                            <option value="all">Tất cả bác sĩ</option>
+                            <option value="nguyen">BS. Nguyễn Văn D</option>
+                            <option value="tran">BS. Trần Thị E</option>
+                            <option value="le">BS. Lê Văn F</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm bệnh nhân..." onkeyup="searchAppointments()">
+                    </div>
+                </div>
+
+                <div class="appointments-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Bệnh nhân</th>
+                                <th>Bác sĩ</th>
+                                <th>Chuyên khoa</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTableBody">
+                            <tr class="appointment-row pending">
+                                <td>08:00</td>
+                                <td>
+                                    <div class="patient-info">
+                                        <strong>Nguyễn Thị A</strong><br>
+                                        <small>ID: BN001234</small>
+                                    </div>
+                                </td>
+                                <td>BS. Nguyễn Văn D</td>
+                                <td>Nội tổng hợp</td>
+                                <td><span class="status-badge pending">Chờ xác nhận</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small primary" onclick="confirmAppointment(1)">Xác nhận</button>
+                                        <button class="btn-small outline" onclick="editAppointment(1)">Sửa</button>
+                                        <button class="btn-small danger" onclick="cancelAppointment(1)">Hủy</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="appointment-row confirmed">
+                                <td>08:30</td>
+                                <td>
+                                    <div class="patient-info">
+                                        <strong>Trần Văn B</strong><br>
+                                        <small>ID: BN001235</small>
+                                    </div>
+                                </td>
+                                <td>BS. Trần Thị E</td>
+                                <td>Tim mạch</td>
+                                <td><span class="status-badge confirmed">Đã xác nhận</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small success" onclick="checkInPatient(2)">Check-in</button>
+                                        <button class="btn-small outline" onclick="editAppointment(2)">Sửa</button>
+                                        <button class="btn-small danger" onclick="cancelAppointment(2)">Hủy</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="appointment-row in-progress">
+                                <td>09:00</td>
+                                <td>
+                                    <div class="patient-info">
+                                        <strong>Lê Thị C</strong><br>
+                                        <small>ID: BN001236</small>
+                                    </div>
+                                </td>
+                                <td>BS. Lê Văn F</td>
+                                <td>Sản phụ khoa</td>
+                                <td><span class="status-badge in-progress">Đang khám</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewProgress(3)">Theo dõi</button>
+                                        <button class="btn-small success" onclick="completeAppointment(3)">Hoàn thành</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="appointment-row completed">
+                                <td>10:00</td>
+                                <td>
+                                    <div class="patient-info">
+                                        <strong>Phạm Văn D</strong><br>
+                                        <small>ID: BN001237</small>
+                                    </div>
+                                <td>BS. Nguyễn Văn D</td>
+                                <td>Nội tổng hợp</td>
+                                <td><span class="status-badge completed">Hoàn thành</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-small outline" onclick="viewDetails(4)">Chi tiết</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div class="bulk-actions">
+                    <div class="selected-count">
+                        <span id="selectedCount">0</span> lịch hẹn được chọn
+                    </div>
+                    <div class="bulk-buttons">
+                        <button class="btn-outline" onclick="bulkConfirm()">Xác nhận hàng loạt</button>
+                        <button class="btn-outline" onclick="bulkReschedule()">Dời lịch</button>
+                        <button class="btn-danger" onclick="bulkCancel()">Hủy hàng loạt</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Check-in/Out Section -->
+            <section id="checkin-section" class="content-section">
+                <div class="section-header">
+                    <h1>Check-in/Out bệnh nhân</h1>
+                    <p>Quản lý việc check-in và check-out của bệnh nhân</p>
+                </div>
+
+                <div class="checkin-container">
+                    <!-- Quick Check-in -->
+                    <div class="checkin-card">
+                        <h3>Check-in nhanh</h3>
+                        <div class="checkin-form">
+                            <div class="form-group">
+                                <label>Mã lịch hẹn hoặc SĐT:</label>
+                                <input type="text" id="checkinCode" placeholder="Nhập mã lịch hẹn hoặc số điện thoại">
+                            </div>
+                            <button class="btn-primary" onclick="quickCheckIn()">Check-in</button>
+                        </div>
+                    </div>
+
+                    <!-- Today's Check-ins -->
+                    <div class="checkin-card">
+                        <h3>Bệnh nhân đã check-in hôm nay</h3>
+                        <div class="checked-in-list">
+                            <div class="checked-in-item">
+                                <div class="patient-avatar">
+                                    <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=NA" alt="Patient">
+                                </div>
+                                <div class="patient-details">
+                                    <h4>Nguyễn Thị A</h4>
+                                    <p>Check-in: 07:45 • Phòng 101</p>
+                                    <span class="status waiting">Đang chờ</span>
+                                </div>
+                                <div class="checkin-actions">
+                                    <button class="btn-small outline" onclick="viewPatientStatus(1)">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="checked-in-item">
+                                <div class="patient-avatar">
+                                    <img src="https://via.placeholder.com/40x40/50E3C2/FFFFFF?text=TB" alt="Patient">
+                                </div>
+                                <div class="patient-details">
+                                    <h4>Trần Văn B</h4>
+                                    <p>Check-in: 08:15 • Phòng 102</p>
+                                    <span class="status in-consultation">Đang khám</span>
+                                </div>
+                                <div class="checkin-actions">
+                                    <button class="btn-small outline" onclick="viewPatientStatus(2)">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="checked-in-item">
+                                <div class="patient-avatar">
+                                    <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=LC" alt="Patient">
+                                </div>
+                                <div class="patient-details">
+                                    <h4>Lê Thị C</h4>
+                                    <p>Check-in: 08:30 • Phòng 103</p>
+                                    <span class="status completed">Hoàn thành</span>
+                                </div>
+                                <div class="checkin-actions">
+                                    <button class="btn-small outline" onclick="viewPatientStatus(3)">Chi tiết</button>
+                                    <button class="btn-small success" onclick="checkoutPatient(3)">Check-out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check-in Statistics -->
+                <div class="checkin-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Đã check-in</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Đang chờ</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Đã check-out</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Vắng mặt</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inquiries Section -->
+            <section id="inquiries-section" class="content-section">
+                <div class="section-header">
+                    <h1>Hỗ trợ khách hàng</h1>
+                    <p>Xử lý thắc mắc và yêu cầu từ bệnh nhân</p>
+                </div>
+
+                <div class="inquiries-container">
+                    <!-- New Inquiries -->
+                    <div class="inquiries-panel">
+                        <div class="panel-header">
+                            <h3>Thắc mắc mới</h3>
+                            <span class="badge">8</span>
+                        </div>
+                        <div class="inquiry-list">
+                            <div class="inquiry-item unread">
+                                <div class="inquiry-header">
+                                    <div class="customer-info">
+                                        <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=NA" alt="Customer">
+                                        <div>
+                                            <h4>Nguyễn Thị A</h4>
+                                            <span class="inquiry-type phone">Cuộc gọi</span>
+                                        </div>
+                                    </div>
+                                    <span class="inquiry-time">5 phút trước</span>
+                                </div>
+                                <div class="inquiry-content">
+                                    <p>Hỏi về kết quả xét nghiệm máu</p>
+                                </div>
+                                <div class="inquiry-actions">
+                                    <button class="btn-small primary" onclick="respondToInquiry(1)">Phản hồi</button>
+                                    <button class="btn-small outline" onclick="viewInquiryDetails(1)">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="inquiry-item unread">
+                                <div class="inquiry-header">
+                                    <div class="customer-info">
+                                        <img src="https://via.placeholder.com/40x40/50E3C2/FFFFFF?text=TB" alt="Customer">
+                                        <div>
+                                            <h4>Trần Văn B</h4>
+                                            <span class="inquiry-type email">Email</span>
+                                        </div>
+                                    </div>
+                                    <span class="inquiry-time">15 phút trước</span>
+                                </div>
+                                <div class="inquiry-content">
+                                    <p>Hỏi về cách đặt lịch khám từ xa</p>
+                                </div>
+                                <div class="inquiry-actions">
+                                    <button class="btn-small primary" onclick="respondToInquiry(2)">Phản hồi</button>
+                                    <button class="btn-small outline" onclick="viewInquiryDetails(2)">Chi tiết</button>
+                                </div>
+                            </div>
+                            <div class="inquiry-item">
+                                <div class="inquiry-header">
+                                    <div class="customer-info">
+                                        <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=LC" alt="Customer">
+                                        <div>
+                                            <h4>Lê Thị C</h4>
+                                            <span class="inquiry-type chat">Chat</span>
+                                        </div>
+                                    </div>
+                                    <span class="inquiry-time">30 phút trước</span>
+                                </div>
+                                <div class="inquiry-content">
+                                    <p>Hỏi về giờ làm việc của phòng khám</p>
+                                </div>
+                                <div class="inquiry-actions">
+                                    <button class="btn-small success" onclick="markAsResolved(3)">Đã giải quyết</button>
+                                    <button class="btn-small outline" onclick="viewInquiryDetails(3)">Chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resolved Inquiries -->
+                    <div class="inquiries-panel">
+                        <div class="panel-header">
+                            <h3>Đã giải quyết</h3>
+                            <span class="badge resolved">24</span>
+                        </div>
+                        <div class="resolved-list">
+                            <div class="resolved-item">
+                                <div class="customer-info">
+                                    <strong>Phạm Văn D</strong>
+                                    <span class="resolved-time">2 giờ trước</span>
+                                </div>
+                                <p class="resolved-topic">Hỏi về bảo hiểm y tế</p>
+                                <span class="resolved-by">NV. Trần Thị Linh</span>
+                            </div>
+                            <div class="resolved-item">
+                                <div class="customer-info">
+                                    <strong>Hoàng Thị E</strong>
+                                    <span class="resolved-time">3 giờ trước</span>
+                                </div>
+                                <p class="resolved-topic">Hỏi về giá khám</p>
+                                <span class="resolved-by">NV. Trần Thị Linh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Responses -->
+                <div class="quick-responses">
+                    <h3>Phản hồi nhanh</h3>
+                    <div class="response-templates">
+                        <button class="template-btn" onclick="useTemplate(1)">Giờ làm việc: 7:00 - 17:00</button>
+                        <button class="template-btn" onclick="useTemplate(2)">Cách đặt lịch qua app</button>
+                        <button class="template-btn" onclick="useTemplate(3)">Thông tin bảo hiểm y tế</button>
+                        <button class="template-btn" onclick="useTemplate(4)">Hướng dẫn đến bệnh viện</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scheduling Section -->
+            <section id="scheduling-section" class="content-section">
+                <div class="section-header">
+                    <h1>Lịch làm việc bác sĩ</h1>
+                    <p>Quản lý và sắp xếp lịch làm việc cho các bác sĩ</p>
+                </div>
+
+                <div class="scheduling-toolbar">
+                    <div class="scheduling-filters">
+                        <select class="filter-select" onchange="filterDoctors()">
+                            <option value="all">Tất cả bác sĩ</option>
+                            <option value="cardiology">Tim mạch</option>
+                            <option value="neurology">Thần kinh</option>
+                            <option value="orthopedics">Chỉnh hình</option>
+                            <option value="pediatrics">Nhi khoa</option>
+                        </select>
+                        <select class="filter-select" onchange="filterWeek()">
+                            <option value="this-week">Tuần này</option>
+                            <option value="next-week">Tuần sau</option>
+                            <option value="month">Tháng này</option>
+                        </select>
+                    </div>
+                    <div class="scheduling-actions">
+                        <button class="btn-outline" onclick="copyPreviousWeek()">
+                            <i class="fas fa-copy"></i>
+                            Sao chép tuần trước
+                        </button>
+                        <button class="btn-primary" onclick="publishSchedule()">
+                            <i class="fas fa-share"></i>
+                            Xuất bản lịch
+                        </button>
+                    </div>
+                </div>
+
+                <div class="schedule-grid">
+                    <div class="schedule-header">
+                        <div class="doctor-column">Bác sĩ</div>
+                        <div class="day-column">Thứ 2<br><span>11/11</span></div>
+                        <div class="day-column">Thứ 3<br><span>12/11</span></div>
+                        <div class="day-column">Thứ 4<br><span>13/11</span></div>
+                        <div class="day-column">Thứ 5<br><span>14/11</span></div>
+                        <div class="day-column">Thứ 6<br><span>15/11</span></div>
+                        <div class="day-column">Thứ 7<br><span>16/11</span></div>
+                        <div class="day-column today">CN<br><span>17/11</span></div>
+                    </div>
+
+                    <div class="doctor-row">
+                        <div class="doctor-info">
+                            <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=BS" alt="Doctor">
+                            <div>
+                                <h4>BS. Nguyễn Văn D</h4>
+                                <p>Tim mạch</p>
+                            </div>
+                        </div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'mon')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'tue')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'wed')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'thu')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'fri')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('nguyen', 'sat')">08:00-12:00</div>
+                        <div class="schedule-cell unavailable" onclick="editScheduleSlot('nguyen', 'sun')">Nghỉ</div>
+                    </div>
+
+                    <div class="doctor-row">
+                        <div class="doctor-info">
+                            <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=BS" alt="Doctor">
+                            <div>
+                                <h4>BS. Trần Thị E</h4>
+                                <p>Nội tổng hợp</p>
+                            </div>
+                        </div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'mon')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'tue')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'wed')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'thu')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'fri')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('tran', 'sat')">08:00-12:00</div>
+                        <div class="schedule-cell unavailable" onclick="editScheduleSlot('tran', 'sun')">Nghỉ</div>
+                    </div>
+
+                    <div class="doctor-row">
+                        <div class="doctor-info">
+                            <img src="https://via.placeholder.com/40x40/F39C12/FFFFFF?text=BS" alt="Doctor">
+                            <div>
+                                <h4>BS. Lê Văn F</h4>
+                                <p>Sản phụ khoa</p>
+                            </div>
+                        </div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'mon')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'tue')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'wed')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'thu')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'fri')">08:00-12:00<br>14:00-17:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'sat')">08:00-12:00</div>
+                        <div class="schedule-cell available" onclick="editScheduleSlot('le', 'sun')">08:00-12:00</div>
+                    </div>
+                </div>
+
+                <!-- Schedule Legend -->
+                <div class="schedule-legend">
+                    <div class="legend-item">
+                        <div class="legend-color available"></div>
+                        <span>Có thể đặt lịch</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color unavailable"></div>
+                        <span>Nghỉ/nghỉ phép</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color full"></div>
+                        <span>Đã đầy lịch</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patients Section -->
+            <section id="patients-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý bệnh nhân</h1>
+                    <p>Xem và quản lý thông tin bệnh nhân</p>
+                </div>
+
+                <div class="patients-toolbar">
+                    <div class="patient-filters">
+                        <select class="filter-select" onchange="filterPatients()">
+                            <option value="all">Tất cả bệnh nhân</option>
+                            <option value="active">Đang điều trị</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="inactive">Không hoạt động</option>
+                        </select>
+                        <select class="filter-select" onchange="filterByDoctor()">
+                            <option value="all">Tất cả bác sĩ</option>
+                            <option value="nguyen">BS. Nguyễn Văn D</option>
+                            <option value="tran">BS. Trần Thị E</option>
+                            <option value="le">BS. Lê Văn F</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm bệnh nhân..." onkeyup="searchPatients()">
+                    </div>
+                    <button class="btn-primary" onclick="addNewPatient()">
+                        <i class="fas fa-plus"></i>
+                        Thêm bệnh nhân
+                    </button>
+                </div>
+
+                <div class="patients-grid">
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <img src="https://via.placeholder.com/60x60/E94B3C/FFFFFF?text=NA" alt="Patient" class="patient-avatar">
+                            <div class="patient-basic-info">
+                                <h4>Nguyễn Thị A</h4>
+                                <p class="patient-id">ID: BN001234</p>
+                                <p class="last-visit">Khám gần nhất: 15/11/2024</p>
+                            </div>
+                            <div class="patient-status active">Đang điều trị</div>
+                        </div>
+                        <div class="patient-details">
+                            <div class="patient-stat">
+                                <span class="stat-label">Tuổi:</span>
+                                <span class="stat-value">35</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Giới tính:</span>
+                                <span class="stat-value">Nữ</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Số lần khám:</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Bác sĩ phụ trách:</span>
+                                <span class="stat-value">BS. Nguyễn Văn D</span>
+                            </div>
+                        </div>
+                        <div class="patient-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>0987654321</span>
+                            <i class="fas fa-envelope"></i>
+                            <span>nguyenthia@email.com</span>
+                        </div>
+                        <div class="patient-actions">
+                            <button class="btn-small outline" onclick="viewPatientDetails(1)">Xem hồ sơ</button>
+                            <button class="btn-small outline" onclick="editPatient(1)">Chỉnh sửa</button>
+                            <button class="btn-small primary" onclick="scheduleAppointmentForPatient(1)">Đặt lịch</button>
+                        </div>
+                    </div>
+
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <img src="https://via.placeholder.com/60x60/50E3C2/FFFFFF?text=TB" alt="Patient" class="patient-avatar">
+                            <div class="patient-basic-info">
+                                <h4>Trần Văn B</h4>
+                                <p class="patient-id">ID: BN001235</p>
+                                <p class="last-visit">Khám gần nhất: 12/11/2024</p>
+                            </div>
+                            <div class="patient-status active">Đang điều trị</div>
+                        </div>
+                        <div class="patient-details">
+                            <div class="patient-stat">
+                                <span class="stat-label">Tuổi:</span>
+                                <span class="stat-value">42</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Giới tính:</span>
+                                <span class="stat-value">Nam</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Số lần khám:</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Bác sĩ phụ trách:</span>
+                                <span class="stat-value">BS. Trần Thị E</span>
+                            </div>
+                        </div>
+                        <div class="patient-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>0987654322</span>
+                            <i class="fas fa-envelope"></i>
+                            <span>tranvanb@email.com</span>
+                        </div>
+                        <div class="patient-actions">
+                            <button class="btn-small outline" onclick="viewPatientDetails(2)">Xem hồ sơ</button>
+                            <button class="btn-small outline" onclick="editPatient(2)">Chỉnh sửa</button>
+                            <button class="btn-small primary" onclick="scheduleAppointmentForPatient(2)">Đặt lịch</button>
+                        </div>
+                    </div>
+
+                    <div class="patient-card">
+                        <div class="patient-header">
+                            <img src="https://via.placeholder.com/60x60/4A90E2/FFFFFF?text=LC" alt="Patient" class="patient-avatar">
+                            <div class="patient-basic-info">
+                                <h4>Lê Thị C</h4>
+                                <p class="patient-id">ID: BN001236</p>
+                                <p class="last-visit">Khám gần nhất: 10/11/2024</p>
+                            </div>
+                            <div class="patient-status completed">Hoàn thành</div>
+                        </div>
+                        <div class="patient-details">
+                            <div class="patient-stat">
+                                <span class="stat-label">Tuổi:</span>
+                                <span class="stat-value">28</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Giới tính:</span>
+                                <span class="stat-value">Nữ</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Số lần khám:</span>
+                                <span class="stat-value">5</span>
+                            </div>
+                            <div class="patient-stat">
+                                <span class="stat-label">Bác sĩ phụ trách:</span>
+                                <span class="stat-value">BS. Lê Văn F</span>
+                            </div>
+                        </div>
+                        <div class="patient-contact">
+                            <i class="fas fa-phone"></i>
+                            <span>0987654323</span>
+                            <i class="fas fa-envelope"></i>
+                            <span>lethic@email.com</span>
+                        </div>
+                        <div class="patient-actions">
+                            <button class="btn-small outline" onclick="viewPatientDetails(3)">Xem hồ sơ</button>
+                            <button class="btn-small outline" onclick="editPatient(3)">Chỉnh sửa</button>
+                            <button class="btn-small outline" onclick="scheduleAppointmentForPatient(3)">Đặt lịch</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Statistics -->
+                <div class="patients-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Tổng bệnh nhân</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89</div>
+                        <div class="stat-label">Đang điều trị</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">67</div>
+                        <div class="stat-label">Hoàn thành</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Không hoạt động</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rooms Section -->
+            <section id="rooms-section" class="content-section">
+                <div class="section-header">
+                    <h1>Quản lý phòng khám</h1>
+                    <p>Giám sát và quản lý tình trạng các phòng khám</p>
+                </div>
+
+                <div class="rooms-toolbar">
+                    <div class="room-filters">
+                        <select class="filter-select" onchange="filterRooms()">
+                            <option value="all">Tất cả phòng</option>
+                            <option value="consultation">Phòng khám</option>
+                            <option value="examination">Phòng xét nghiệm</option>
+                            <option value="surgery">Phòng phẫu thuật</option>
+                            <option value="waiting">Phòng chờ</option>
+                        </select>
+                        <select class="filter-select" onchange="filterRoomStatus()">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="available">Sẵn sàng</option>
+                            <option value="occupied">Đang sử dụng</option>
+                            <option value="cleaning">Đang dọn dẹp</option>
+                            <option value="maintenance">Bảo trì</option>
+                        </select>
+                    </div>
+                    <div class="room-actions">
+                        <button class="btn-outline" onclick="addNewRoom()">
+                            <i class="fas fa-plus"></i>
+                            Thêm phòng
+                        </button>
+                        <button class="btn-primary" onclick="exportRoomStatus()">
+                            <i class="fas fa-download"></i>
+                            Xuất báo cáo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="rooms-grid">
+                    <div class="room-card">
+                        <div class="room-header">
+                            <div class="room-number">101</div>
+                            <div class="room-type">Phòng khám tim mạch</div>
+                            <div class="room-status available">Sẵn sàng</div>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-info">
+                                <i class="fas fa-user-md"></i>
+                                <span>BS. Nguyễn Văn D</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-clock"></i>
+                                <span>Lịch hẹn tiếp theo: 08:00</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-tools"></i>
+                                <span>Thiết bị: Máy ECG, Máy siêu âm</span>
+                            </div>
+                        </div>
+                        <div class="room-actions">
+                            <button class="btn-small outline" onclick="viewRoomDetails(101)">Chi tiết</button>
+                            <button class="btn-small outline" onclick="scheduleRoomCleaning(101)">Dọn dẹp</button>
+                            <button class="btn-small primary" onclick="assignDoctorToRoom(101)">Gán bác sĩ</button>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-header">
+                            <div class="room-number">102</div>
+                            <div class="room-type">Phòng khám nội tổng hợp</div>
+                            <div class="room-status occupied">Đang sử dụng</div>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-info">
+                                <i class="fas fa-user-md"></i>
+                                <span>BS. Trần Thị E</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-user"></i>
+                                <span>Bệnh nhân: Nguyễn Thị A</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-clock"></i>
+                                <span>Bắt đầu: 08:30</span>
+                            </div>
+                        </div>
+                        <div class="room-actions">
+                            <button class="btn-small outline" onclick="viewRoomDetails(102)">Chi tiết</button>
+                            <button class="btn-small outline" onclick="extendRoomTime(102)">Gia hạn</button>
+                            <button class="btn-small success" onclick="endConsultation(102)">Kết thúc</button>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-header">
+                            <div class="room-number">103</div>
+                            <div class="room-type">Phòng khám sản phụ khoa</div>
+                            <div class="room-status cleaning">Đang dọn dẹp</div>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-info">
+                                <i class="fas fa-user-md"></i>
+                                <span>BS. Lê Văn F</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-clock"></i>
+                                <span>Hoàn thành dọn dẹp: 15 phút</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-broom"></i>
+                                <span>NV dọn dẹp: Trần Thị G</span>
+                            </div>
+                        </div>
+                        <div class="room-actions">
+                            <button class="btn-small outline" onclick="viewRoomDetails(103)">Chi tiết</button>
+                            <button class="btn-small primary" onclick="markRoomReady(103)">Sẵn sàng</button>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-header">
+                            <div class="room-number">104</div>
+                            <div class="room-type">Phòng xét nghiệm</div>
+                            <div class="room-status maintenance">Bảo trì</div>
+                        </div>
+                        <div class="room-details">
+                            <div class="room-info">
+                                <i class="fas fa-tools"></i>
+                                <span>Máy xét nghiệm máu</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-calendar"></i>
+                                <span>Hoàn thành bảo trì: 16/11/2024</span>
+                            </div>
+                            <div class="room-info">
+                                <i class="fas fa-wrench"></i>
+                                <span>Kỹ thuật viên: Nguyễn Văn H</span>
+                            </div>
+                        </div>
+                        <div class="room-actions">
+                            <button class="btn-small outline" onclick="viewRoomDetails(104)">Chi tiết</button>
+                            <button class="btn-small primary" onclick="scheduleMaintenance(104)">Lên lịch bảo trì</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Statistics -->
+                <div class="rooms-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Tổng phòng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Sẵn sàng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Đang sử dụng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Đang dọn dẹp</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="content-section">
+                <div class="section-header">
+                    <h1>Báo cáo thống kê</h1>
+                    <p>Phân tích hiệu suất và hoạt động của phòng khám</p>
+                </div>
+
+                <!-- Report Filters -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label>Loại báo cáo</label>
+                        <select id="reportType" onchange="changeReportType()">
+                            <option value="daily">Báo cáo ngày</option>
+                            <option value="weekly">Báo cáo tuần</option>
+                            <option value="monthly">Báo cáo tháng</option>
+                            <option value="performance">Hiệu suất</option>
+                            <option value="revenue">Doanh thu</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Khoảng thời gian</label>
+                        <select id="reportPeriod" onchange="changeReportPeriod()">
+                            <option value="today">Hôm nay</option>
+                            <option value="week">Tuần này</option>
+                            <option value="month">Tháng này</option>
+                            <option value="quarter">Quý này</option>
+                            <option value="year">Năm nay</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="generateReport()">
+                        <i class="fas fa-chart-bar"></i>
+                        Tạo báo cáo
+                    </button>
+                    <button class="btn-outline" onclick="exportReport()">
+                        <i class="fas fa-download"></i>
+                        Xuất báo cáo
+                    </button>
+                </div>
+
+                <!-- Report Content -->
+                <div class="report-content">
+                    <!-- Daily Report -->
+                    <div class="report-section active" id="daily-report">
+                        <div class="report-metrics">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Tổng lịch hẹn</h3>
+                                </div>
+                                <div class="metric-value">45</div>
+                                <div class="metric-description">Hôm nay</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Đã hoàn thành</h3>
+                                </div>
+                                <div class="metric-value">38</div>
+                                <div class="metric-description">84% hoàn thành</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Đang chờ</h3>
+                                </div>
+                                <div class="metric-value">7</div>
+                                <div class="metric-description">Chờ xác nhận/check-in</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <h3>Vắng mặt</h3>
+                                </div>
+                                <div class="metric-value">2</div>
+                                <div class="metric-description">Không đến khám</div>
+                            </div>
+                        </div>
+
+                        <div class="report-charts">
+                            <div class="chart-container">
+                                <h3>Thời gian cao điểm</h3>
+                                <canvas id="peakHoursChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Chuyên khoa được yêu cầu</h3>
+                                <canvas id="specialtiesChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="report-details">
+                            <div class="detail-section">
+                                <h3>Thắc mắc đã giải quyết</h3>
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Tổng thắc mắc:</span>
+                                        <span class="detail-value">24</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Đã giải quyết:</span>
+                                        <span class="detail-value">22</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Thời gian phản hồi trung bình:</span>
+                                        <span class="detail-value">15 phút</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Mức độ hài lòng:</span>
+                                        <span class="detail-value">4.6/5 ⭐</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages-section" class="content-section">
+                <div class="section-header">
+                    <h1>Tin nhắn và thông báo</h1>
+                    <p>Gửi và nhận tin nhắn với bệnh nhân và đồng nghiệp</p>
+                </div>
+
+                <div class="messages-container">
+                    <div class="messages-sidebar">
+                        <div class="messages-search">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Tìm kiếm tin nhắn..." onkeyup="searchMessages()">
+                            </div>
+                        </div>
+                        <div class="messages-list">
+                            <div class="message-thread active" onclick="openMessageThread(1)">
+                                <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=NA" alt="Patient">
+                                <div class="thread-info">
+                                    <div class="thread-name">Nguyễn Thị A</div>
+                                    <div class="thread-preview">Cảm ơn về lần khám hôm qua...</div>
+                                    <div class="thread-time">5 phút trước</div>
+                                </div>
+                                <div class="thread-unread">2</div>
+                            </div>
+                            <div class="message-thread" onclick="openMessageThread(2)">
+                                <img src="https://via.placeholder.com/40x40/50E3C2/FFFFFF?text=TB" alt="Patient">
+                                <div class="thread-info">
+                                    <div class="thread-name">Trần Văn B</div>
+                                    <div class="thread-preview">Tôi có thể đổi lịch khám được không?</div>
+                                    <div class="thread-time">1 giờ trước</div>
+                                </div>
+                            </div>
+                            <div class="message-thread" onclick="openMessageThread(3)">
+                                <img src="https://via.placeholder.com/40x40/4A90E2/FFFFFF?text=BS" alt="Doctor">
+                                <div class="thread-info">
+                                    <div class="thread-name">BS. Nguyễn Văn D</div>
+                                    <div class="thread-preview">Thông báo về lịch nghỉ phép...</div>
+                                    <div class="thread-time">2 giờ trước</div>
+                                </div>
+                            </div>
+                            <div class="message-thread" onclick="openMessageThread(4)">
+                                <img src="https://via.placeholder.com/40x40/F39C12/FFFFFF?text=NV" alt="Staff">
+                                <div class="thread-info">
+                                    <div class="thread-name">NV. Trần Thị G</div>
+                                    <div class="thread-preview">Cập nhật tình trạng phòng khám...</div>
+                                    <div class="thread-time">3 giờ trước</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="messages-chat">
+                        <div class="chat-header">
+                            <img src="https://via.placeholder.com/40x40/E94B3C/FFFFFF?text=NA" alt="Patient">
+                            <div class="chat-info">
+                                <h4>Nguyễn Thị A</h4>
+                                <p>Bệnh nhân • BN001234</p>
+                            </div>
+                            <div class="chat-actions">
+                                <button class="btn-small outline" onclick="viewPatientRecord(1)">
+                                    <i class="fas fa-file-medical"></i>
+                                </button>
+                                <button class="btn-small outline" onclick="callPatient(1)">
+                                    <i class="fas fa-phone"></i>
+                                </button>
+                                <button class="btn-small outline" onclick="scheduleForPatient(1)">
+                                    <i class="fas fa-calendar-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="chat-messages">
+                            <div class="message received">
+                                <div class="message-avatar">
+                                    <img src="https://via.placeholder.com/32x32/E94B3C/FFFFFF?text=NA" alt="Patient">
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-text">Kính chào! Em cảm ơn cô về lần khám hôm qua. Bác sĩ rất tận tình và giải thích rõ ràng.</div>
+                                    <div class="message-time">14:32</div>
+                                </div>
+                            </div>
+                            <div class="message received">
+                                <div class="message-avatar">
+                                    <img src="https://via.placeholder.com/32x32/E94B3C/FFFFFF?text=NA" alt="Patient">
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-text">Em có một câu hỏi về kết quả xét nghiệm. Bác sĩ kê đơn thuốc Aspirin 100mg, nhưng nhà em có Aspirin 81mg thì có dùng được không?</div>
+                                    <div class="message-time">14:35</div>
+                                </div>
+                            </div>
+                            <div class="message sent">
+                                <div class="message-content">
+                                    <div class="message-text">Chào chị A! Rất vui vì chị hài lòng với dịch vụ. Về câu hỏi của chị, Aspirin 81mg và 100mg có thể hoán đổi được nhưng cần điều chỉnh liều lượng. Chị nên mua đúng loại thuốc mà bác sĩ kê để đảm bảo hiệu quả điều trị tốt nhất. Nếu chị có thắc mắc gì thêm, cứ liên hệ nhé!</div>
+                                    <div class="message-time">14:40</div>
+                                </div>
+                                <div class="message-avatar">
+                                    <img src="https://via.placeholder.com/32x32/F39C12/FFFFFF?text=NV" alt="Staff">
+                                </div>
+                            </div>
+                            <div class="message received">
+                                <div class="message-avatar">
+                                    <img src="https://via.placeholder.com/32x32/E94B3C/FFFFFF?text=NA" alt="Patient">
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-text">Dạ em hiểu rồi cô. Em sẽ mua đúng loại thuốc. Cảm ơn cô nhiều!</div>
+                                    <div class="message-time">14:42</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input">
+                            <div class="input-container">
+                                <input type="text" id="staffMessageInput" placeholder="Nhập tin nhắn..." onkeypress="handleMessageKeyPress(event)">
+                                <button class="send-btn" onclick="sendStaffMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="input-actions">
+                                <button class="input-action-btn" onclick="attachStaffFile()">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="input-action-btn" onclick="useStaffTemplate()">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Statistics -->
+                <div class="messages-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Cuộc trò chuyện</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Tin nhắn đã gửi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Chưa trả lời</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2.3h</div>
+                        <div class="stat-label">Thời gian phản hồi</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Response Modal -->
+    <div id="responseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Phản hồi thắc mắc</h3>
+                <span class="close" onclick="closeResponseModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="inquiry-details">
+                    <div class="customer-header">
+                        <img src="https://via.placeholder.com/60x60/E94B3C/FFFFFF?text=NA" alt="Customer" id="inquiryAvatar">
+                        <div>
+                            <h4 id="inquiryCustomer">Nguyễn Thị A</h4>
+                            <p id="inquiryType">Cuộc gọi • 5 phút trước</p>
+                        </div>
+                    </div>
+                    <div class="inquiry-message">
+                        <h5>Nội dung thắc mắc:</h5>
+                        <p id="inquiryMessage">Hỏi về kết quả xét nghiệm máu</p>
+                    </div>
+                </div>
+
+                <div class="response-form">
+                    <div class="form-group">
+                        <label>Phản hồi:</label>
+                        <textarea rows="6" placeholder="Nhập nội dung phản hồi..." id="responseText"></textarea>
+                    </div>
+                    <div class="response-actions">
+                        <div class="response-options">
+                            <label><input type="checkbox" id="markResolved"> Đánh dấu đã giải quyết</label>
+                            <label><input type="checkbox" id="sendEmail"> Gửi email xác nhận</label>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-outline" onclick="closeResponseModal()">Hủy</button>
+                            <button class="btn-primary" onclick="sendResponse()">Gửi phản hồi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="staff-dashboard.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Đặt Lịch Khám Bệnh Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedBooking</span>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#home" class="active">Trang chủ</a></li>
+                        <li><a href="#services">Dịch vụ</a></li>
+                        <li><a href="#doctors">Bác sĩ</a></li>
+                        <li><a href="#news">Tin tức</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="showLoginModal()">Đăng nhập</button>
+                    <button class="btn btn-primary" onclick="showRegisterModal()">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Đặt Lịch Khám Bệnh Online Nhanh Gọn & Tiện Lợi</h1>
+                    <p>Đặt lịch khám với bác sĩ chuyên khoa hàng đầu tại các bệnh viện đối tác. Tiết kiệm thời gian, chăm sóc sức khỏe tốt hơn.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-large" onclick="scrollToServices()">
+                            <i class="fas fa-calendar-check"></i>
+                            Đặt lịch ngay
+                        </button>
+                        <button class="btn btn-outline btn-large" onclick="showChatbot()">
+                            <i class="fas fa-robot"></i>
+                            Tư vấn AI
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://via.placeholder.com/600x400/4A90E2/FFFFFF?text=Medical+Care" alt="Chăm sóc y tế">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Dịch Vụ Y Tế</h2>
+                <p>Các dịch vụ khám chữa bệnh chuyên nghiệp tại hệ thống bệnh viện đối tác</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>Khám Tổng Quát</h3>
+                    <p>Khám sức khỏe tổng thể, tư vấn phòng ngừa bệnh tật</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Xét Nghiệm</h3>
+                    <p>Các loại xét nghiệm máu, nước tiểu, siêu âm, X-quang</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3>Tiêm Chủng</h3>
+                    <p>Tiêm vaccine phòng bệnh cho trẻ em và người lớn</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Khám Từ Xa</h3>
+                    <p>Tư vấn trực tuyến với bác sĩ chuyên khoa</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Tim Mạch</h3>
+                    <p>Khám và điều trị các bệnh về tim mạch</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Thần Kinh</h3>
+                    <p>Chẩn đoán và điều trị bệnh lý thần kinh</p>
+                    <button class="btn btn-outline">Đặt lịch</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors" class="doctors">
+        <div class="container">
+            <div class="section-header">
+                <h2>Đội Ngũ Bác Sĩ</h2>
+                <p>Bác sĩ chuyên khoa giàu kinh nghiệm, tận tâm với bệnh nhân</p>
+            </div>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://via.placeholder.com/300x300/4A90E2/FFFFFF?text=Dr.+Nguyen" alt="Bác sĩ Nguyễn">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>BS. Nguyễn Văn A</h3>
+                        <p class="specialty">Tim mạch</p>
+                        <p class="experience">15 năm kinh nghiệm</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.8 (120 đánh giá)</span>
+                        </div>
+                        <button class="btn btn-primary">Đặt lịch</button>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://via.placeholder.com/300x300/E94B3C/FFFFFF?text=Dr.+Tran" alt="Bác sĩ Trần">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>BS. Trần Thị B</h3>
+                        <p class="specialty">Sản phụ khoa</p>
+                        <p class="experience">12 năm kinh nghiệm</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0 (95 đánh giá)</span>
+                        </div>
+                        <button class="btn btn-primary">Đặt lịch</button>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://via.placeholder.com/300x300/50E3C2/FFFFFF?text=Dr.+Le" alt="Bác sĩ Lê">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>BS. Lê Văn C</h3>
+                        <p class="specialty">Nhi khoa</p>
+                        <p class="experience">10 năm kinh nghiệm</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7 (85 đánh giá)</span>
+                        </div>
+                        <button class="btn btn-primary">Đặt lịch</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline btn-large">Xem tất cả bác sĩ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hospitals Section -->
+    <section class="hospitals">
+        <div class="container">
+            <div class="section-header">
+                <h2>Bệnh Viện Đối Tác</h2>
+                <p>Hệ thống bệnh viện uy tín trên toàn quốc</p>
+            </div>
+            <div class="hospitals-grid">
+                <div class="hospital-card">
+                    <div class="hospital-image">
+                        <img src="https://via.placeholder.com/400x250/4A90E2/FFFFFF?text=BV+Viet+Duc" alt="Bệnh viện Việt Đức">
+                    </div>
+                    <div class="hospital-info">
+                        <h3>Bệnh Viện Việt Đức</h3>
+                        <p class="address"><i class="fas fa-map-marker-alt"></i> 40 Tràng Thi, Hoàn Kiếm, Hà Nội</p>
+                        <p class="specialties">Tim mạch, Ung bướu, Thần kinh</p>
+                        <p class="hours"><i class="fas fa-clock"></i> 24/7</p>
+                        <button class="btn btn-outline">Xem chi tiết</button>
+                    </div>
+                </div>
+                <div class="hospital-card">
+                    <div class="hospital-image">
+                        <img src="https://via.placeholder.com/400x250/E94B3C/FFFFFF?text=BV+Cho+Ray" alt="Bệnh viện Chợ Rẫy">
+                    </div>
+                    <div class="hospital-info">
+                        <h3>Bệnh Viện Chợ Rẫy</h3>
+                        <p class="address"><i class="fas fa-map-marker-alt"></i> 201B Nguyễn Chí Thanh, Quận 5, TP.HCM</p>
+                        <p class="specialties">Đa khoa, Ung bướu, Tim mạch</p>
+                        <p class="hours"><i class="fas fa-clock"></i> 24/7</p>
+                        <button class="btn btn-outline">Xem chi tiết</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="news">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tin Tức Sức Khỏe</h2>
+                <p>Cập nhật thông tin y tế, sức khỏe mới nhất</p>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/4A90E2/FFFFFF?text=Tin+tuc+1" alt="Tin tức">
+                    </div>
+                    <div class="news-content">
+                        <h3>Phòng ngừa bệnh tim mạch hiệu quả</h3>
+                        <p>Các biện pháp phòng ngừa bệnh tim mạch từ lối sống đến chế độ ăn uống khoa học...</p>
+                        <div class="news-meta">
+                            <span><i class="fas fa-calendar"></i> 15/12/2024</span>
+                            <span><i class="fas fa-user"></i> BS. Nguyễn Văn A</span>
+                        </div>
+                        <button class="btn btn-link">Đọc thêm</button>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/50E3C2/FFFFFF?text=Tin+tuc+2" alt="Tin tức">
+                    </div>
+                    <div class="news-content">
+                        <h3>Lịch tiêm chủng cho trẻ em năm 2025</h3>
+                        <p>Lịch tiêm vaccine đầy đủ cho trẻ từ sơ sinh đến 12 tuổi theo khuyến cáo của Bộ Y Tế...</p>
+                        <div class="news-meta">
+                            <span><i class="fas fa-calendar"></i> 12/12/2024</span>
+                            <span><i class="fas fa-user"></i> BS. Trần Thị B</span>
+                        </div>
+                        <button class="btn btn-link">Đọc thêm</button>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/E94B3C/FFFFFF?text=Tin+tuc+3" alt="Tin tức">
+                    </div>
+                    <div class="news-content">
+                        <h3>Cách chăm sóc sức khỏe mùa đông</h3>
+                        <p>Mùa đông là thời điểm dễ mắc các bệnh về đường hô hấp. Bài viết hướng dẫn cách bảo vệ sức khỏe...</p>
+                        <div class="news-meta">
+                            <span><i class="fas fa-calendar"></i> 10/12/2024</span>
+                            <span><i class="fas fa-user"></i> BS. Lê Văn C</span>
+                        </div>
+                        <button class="btn btn-link">Đọc thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-hospital"></i>
+                        <span>MedBooking</span>
+                    </div>
+                    <p>Hệ thống đặt lịch khám bệnh online hàng đầu Việt Nam</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Dịch vụ</h4>
+                    <ul>
+                        <li><a href="#">Khám tổng quát</a></li>
+                        <li><a href="#">Xét nghiệm</a></li>
+                        <li><a href="#">Tiêm chủng</a></li>
+                        <li><a href="#">Khám từ xa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Hướng dẫn đặt lịch</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 1900-xxxx</li>
+                        <li><i class="fas fa-envelope"></i> info@medbooking.vn</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MedBooking. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đăng nhập</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">Email hoặc số điện thoại</label>
+                        <input type="text" id="loginEmail" placeholder="Nhập email hoặc số điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mật khẩu</label>
+                        <input type="password" id="loginPassword" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox"> Ghi nhớ đăng nhập
+                        </label>
+                        <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Đăng nhập</button>
+                </form>
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn btn-google">
+                        <i class="fab fa-google"></i>
+                        Đăng nhập với Google
+                    </button>
+                    <button class="btn btn-facebook">
+                        <i class="fab fa-facebook"></i>
+                        Đăng nhập với Facebook
+                    </button>
+                </div>
+                <p class="auth-link">Chưa có tài khoản? <a href="#" onclick="switchToRegister()">Đăng ký ngay</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đăng ký tài khoản</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Họ</label>
+                            <input type="text" id="firstName" placeholder="Nhập họ">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Tên</label>
+                            <input type="text" id="lastName" placeholder="Nhập tên">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" placeholder="Nhập email">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Số điện thoại</label>
+                        <input type="tel" id="registerPhone" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Mật khẩu</label>
+                        <input type="password" id="registerPassword" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu</label>
+                        <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu">
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox"> Tôi đồng ý với <a href="#">Điều khoản sử dụng</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Đăng ký</button>
+                </form>
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn btn-google">
+                        <i class="fab fa-google"></i>
+                        Đăng ký với Google
+                    </button>
+                    <button class="btn btn-facebook">
+                        <i class="fab fa-facebook"></i>
+                        Đăng ký với Facebook
+                    </button>
+                </div>
+                <p class="auth-link">Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="chatbot-info">
+                <h4>AI Hỗ trợ</h4>
+                <span class="status">● Online</span>
+            </div>
+            <button class="chatbot-close" onclick="closeChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-body">
+            <div class="chat-messages">
+                <div class="message bot">
+                    <div class="message-content">
+                        <p>Xin chào! Tôi là trợ lý AI của MedBooking. Tôi có thể giúp bạn tìm hiểu về dịch vụ y tế, đặt lịch khám hoặc trả lời các câu hỏi về sức khỏe. Bạn cần hỗ trợ gì?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" placeholder="Nhập tin nhắn của bạn..." class="chat-input">
+            <button class="chat-send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle -->
+    <div class="chatbot-toggle" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
