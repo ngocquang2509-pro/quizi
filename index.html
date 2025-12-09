@@ -152,7 +152,10 @@
 
     <div class="footer">
         <div id="score-live">Điểm: 0</div>
-        <button class="btn btn-next" id="next-btn" onclick="nextQuestion()">Câu tiếp theo ➜</button>
+        <div>
+            <button class="btn btn-prev" id="prev-btn" onclick="prevQuestion()" style="display:none; margin-right: 10px;">⬅ Câu trước</button>
+            <button class="btn btn-next" id="next-btn" onclick="nextQuestion()">Câu tiếp theo ➜</button>
+        </div>
     </div>
 </div>
 
@@ -263,6 +266,7 @@
     const explanationEl = document.getElementById("explanation");
     const explanationTextEl = document.getElementById("explanation-text");
     const nextBtn = document.getElementById("next-btn");
+    const prevBtn = document.getElementById("prev-btn");
     const currentQEl = document.getElementById("current-question");
     const totalQEl = document.getElementById("total-questions");
     const progressEl = document.getElementById("progress");
@@ -284,6 +288,7 @@
         optionsEl.innerHTML = "";
         explanationEl.style.display = "none";
         nextBtn.style.display = "none";
+        prevBtn.style.display = currentQuestionIndex > 0 ? "inline-block" : "none";
 
         // Create options
         currentData.a.forEach((option, index) => {
@@ -318,11 +323,20 @@
         
         // Show next button
         nextBtn.style.display = "block";
+        prevBtn.style.display = currentQuestionIndex > 0 ? "inline-block" : "none";
         
         // Scroll to bottom
         setTimeout(() => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }, 100);
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     function nextQuestion() {
